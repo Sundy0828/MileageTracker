@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="899ad5cc1a894749bacce3f25610430f" Name="Diagram1" >
+        <EntityTypeShape EntityType="RunningModel.Role" Width="1.5" PointX="0.875" PointY="1" />
+        <EntityTypeShape EntityType="RunningModel.RunningCalendar" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="RunningModel.RunType" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="RunningModel.User" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="RunningModel.FK_Users_Role" />
+        <AssociationConnector Association="RunningModel.FK_RunningCalendar_RunTypes" />
+        <AssociationConnector Association="RunningModel.FK_RunningCalendar_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

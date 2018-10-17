@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Weekly Milage</h2>
+
+
+<br />
+
+<table class="table table-dark table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Week</th>
+            <th>Total Distance</th>
+            <th><button type="button" class="btn btn-danger" onclick='edit("@DateTime.Now")'>Add Week</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var week in ViewBag.Weeks)
+        {
+        <tr>
+            <td>@week.Date.ToString("dddd, dd MMMM")</td>
+            <td>@week.totMiles</td>
+            <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date")'>Edit Week</button></td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function add() {
+            window.location = '/Athlete/Week';
+        }
+        function edit(date) {
+            window.location = '/Athlete/Week?date='+date;
+        }
+    </script>
+}

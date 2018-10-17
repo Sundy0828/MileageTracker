@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RunningModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RunningCalendar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Sunday" Type="datetime" Nullable="false" />
+          <Property Name="Distance" Type="float" Nullable="false" />
+          <Property Name="RunType" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="RunTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserLevel" Type="int" Nullable="false" />
+          <Property Name="ResetNeeded" Type="bit" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RunningCalendar_RunTypes">
+          <End Role="RunTypes" Type="Self.RunTypes" Multiplicity="1" />
+          <End Role="RunningCalendar" Type="Self.RunningCalendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RunTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RunningCalendar">
+              <PropertyRef Name="RunType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RunningCalendar_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="RunningCalendar" Type="Self.RunningCalendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RunningCalendar">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UserLevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RunningModelStoreContainer">
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RunningCalendar" EntityType="Self.RunningCalendar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RunTypes" EntityType="Self.RunTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RunningCalendar_RunTypes" Association="Self.FK_RunningCalendar_RunTypes">
+            <End Role="RunTypes" EntitySet="RunTypes" />
+            <End Role="RunningCalendar" EntitySet="RunningCalendar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RunningCalendar_Users" Association="Self.FK_RunningCalendar_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="RunningCalendar" EntitySet="RunningCalendar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RunningModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RunningEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Roles" EntityType="RunningModel.Role" />
+          <EntitySet Name="RunningCalendars" EntityType="RunningModel.RunningCalendar" />
+          <EntitySet Name="RunTypes" EntityType="RunningModel.RunType" />
+          <EntitySet Name="Users" EntityType="RunningModel.User" />
+          <AssociationSet Name="FK_Users_Role" Association="RunningModel.FK_Users_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RunningCalendar_RunTypes" Association="RunningModel.FK_RunningCalendar_RunTypes">
+            <End Role="RunType" EntitySet="RunTypes" />
+            <End Role="RunningCalendar" EntitySet="RunningCalendars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RunningCalendar_Users" Association="RunningModel.FK_RunningCalendar_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="RunningCalendar" EntitySet="RunningCalendars" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="RunningModel.FK_Users_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RunningCalendar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Distance" Type="Double" Nullable="false" />
+          <Property Name="RunType" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RunType1" Relationship="RunningModel.FK_RunningCalendar_RunTypes" FromRole="RunningCalendar" ToRole="RunType" />
+          <NavigationProperty Name="User" Relationship="RunningModel.FK_RunningCalendar_Users" FromRole="RunningCalendar" ToRole="User" />
+          <Property Name="Sunday" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="RunType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RunningCalendars" Relationship="RunningModel.FK_RunningCalendar_RunTypes" FromRole="RunType" ToRole="RunningCalendar" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserLevel" Type="Int32" Nullable="false" />
+          <Property Name="ResetNeeded" Type="Boolean" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="RunningModel.FK_Users_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="RunningCalendars" Relationship="RunningModel.FK_RunningCalendar_Users" FromRole="User" ToRole="RunningCalendar" />
+        </EntityType>
+        <Association Name="FK_Users_Role">
+          <End Type="RunningModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="RunningModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserLevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RunningCalendar_RunTypes">
+          <End Type="RunningModel.RunType" Role="RunType" Multiplicity="1" />
+          <End Type="RunningModel.RunningCalendar" Role="RunningCalendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RunType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RunningCalendar">
+              <PropertyRef Name="RunType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RunningCalendar_Users">
+          <End Type="RunningModel.User" Role="User" Multiplicity="1" />
+          <End Type="RunningModel.RunningCalendar" Role="RunningCalendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RunningCalendar">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RunningModelStoreContainer" CdmEntityContainer="RunningEntities" >
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="RunningModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RunningCalendars">
+            <EntityTypeMapping TypeName="RunningModel.RunningCalendar">
+              <MappingFragment StoreEntitySet="RunningCalendar">
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="RunType" ColumnName="RunType" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RunTypes">
+            <EntityTypeMapping TypeName="RunningModel.RunType">
+              <MappingFragment StoreEntitySet="RunTypes">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RunningModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ResetNeeded" ColumnName="ResetNeeded" />
+                <ScalarProperty Name="UserLevel" ColumnName="UserLevel" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
