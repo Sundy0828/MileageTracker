@@ -53,6 +53,7 @@ namespace Mileage_Tracker.Controllers
                 }
             }
 
+            ViewBag.Monday = monday.Date;
             ViewBag.Days = days;
             ViewBag.runTypes = DB.getRunTypes();
             return View();
@@ -69,7 +70,7 @@ namespace Mileage_Tracker.Controllers
                     {
                         UserID = 2,
                         Date = run.Date,
-                        Sunday = run.Sunday,
+                        Monday = run.Monday,
                         Distance = run.Distance,
                         RunType = run.RunType,
                         Notes = run.Notes

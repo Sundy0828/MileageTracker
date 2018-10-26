@@ -11,9 +11,9 @@
 <table class="table table-dark table-hover table-bordered">
     <thead>
         <tr>
-            <th>Week</th>
+            <th>Start of Week</th>
             <th>Total Distance</th>
-            <th><button type="button" class="btn btn-danger" onclick='edit("@DateTime.Now")'>Add Week</button></th>
+            <th><button type="button" class="btn btn-danger" onclick='edit("@DateTime.Now.ToString("MM/dd/yyyy")")'>Add Week</button></th>
         </tr>
     </thead>
     <tbody>
@@ -22,7 +22,7 @@
         <tr>
             <td>@week.Date.ToString("dddd, dd MMMM")</td>
             <td>@week.totMiles</td>
-            <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date")'>Edit Week</button></td>
+            <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")")'>Edit Week</button></td>
         </tr>
         }
     </tbody>

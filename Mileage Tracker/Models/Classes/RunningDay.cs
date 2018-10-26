@@ -8,7 +8,7 @@ namespace Mileage_Tracker.Models.Classes
     public class RunningDay
     {
         public DateTime Date { get; set; }
-        public DateTime Sunday { get; set; }
+        public DateTime Monday { get; set; }
         public double Distance { get; set; }
         public int RunType { get; set; }
         public String Notes { get; set; }

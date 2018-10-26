@@ -17,10 +17,10 @@ namespace Mileage_Tracker.Models
         public int ID { get; set; }
         public int UserID { get; set; }
         public System.DateTime Date { get; set; }
+        public System.DateTime Monday { get; set; }
         public double Distance { get; set; }
         public int RunType { get; set; }
         public string Notes { get; set; }
-        public System.DateTime Sunday { get; set; }
     
         public virtual RunType RunType1 { get; set; }
         public virtual User User { get; set; }

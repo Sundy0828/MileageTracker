@@ -37,7 +37,7 @@ namespace Mileage_Tracker.DataLayer
 
         public List<RunningWeek> getWeeks(int userId)
         {
-            var days = this.DB.RunningCalendars.Where(c => c.UserID == userId).OrderBy(c => c.Sunday).ThenBy(x => x.Date).ToList();
+            var days = this.DB.RunningCalendars.Where(c => c.UserID == userId).OrderBy(c => c.Monday).ThenBy(x => x.Date).ToList();
             List<RunningWeek> weeks = new List<RunningWeek>();
             DateTime day = new DateTime();
             var sum = 0.0;
@@ -46,17 +46,17 @@ namespace Mileage_Tracker.DataLayer
                 
                 if (day == new DateTime())
                 {
-                    day = week.Sunday;
+                    day = week.Monday;
                     sum += week.Distance;
                 }
-                else if (day != week.Sunday)
+                else if (day != week.Monday)
                 {
                     weeks.Add(new RunningWeek()
                     {
                         Date = day,
                         totMiles = sum
                     });
-                    day = week.Sunday;
+                    day = week.Monday;
                     sum = week.Distance;
                 }
                 else
