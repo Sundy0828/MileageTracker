@@ -169,6 +169,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\WeekPlan.cs" />
     <Compile Include="Models\Classes\RunningWeek.cs" />
     <Compile Include="Models\Classes\RunningDay.cs" />
     <Compile Include="Models\Role.cs">
@@ -196,6 +197,9 @@
       <DependentUpon>RunningDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>RunningDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WeeklyPlan.cs">
       <DependentUpon>RunningDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -630,6 +634,8 @@
     <Content Include="Themes\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Themes\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Themes\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Views\Admin\WeeklyPlan.cshtml" />
+    <Content Include="Views\Admin\AddPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

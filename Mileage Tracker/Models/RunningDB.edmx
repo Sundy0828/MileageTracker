@@ -43,6 +43,14 @@
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="DisplayName" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="WeeklyPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WeekOf" Type="date" Nullable="false" />
+          <Property Name="WeekPlan" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <Association Name="FK_RunningCalendar_RunTypes">
           <End Role="RunTypes" Type="Self.RunTypes" Multiplicity="1" />
           <End Role="RunningCalendar" Type="Self.RunningCalendar" Multiplicity="*" />
@@ -84,6 +92,7 @@
           <EntitySet Name="RunningCalendar" EntityType="Self.RunningCalendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RunTypes" EntityType="Self.RunTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeeklyPlan" EntityType="Self.WeeklyPlan" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RunningCalendar_RunTypes" Association="Self.FK_RunningCalendar_RunTypes">
             <End Role="RunTypes" EntitySet="RunTypes" />
             <End Role="RunningCalendar" EntitySet="RunningCalendar" />
@@ -118,6 +127,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="RunningCalendar" EntitySet="RunningCalendars" />
           </AssociationSet>
+          <EntitySet Name="WeeklyPlans" EntityType="RunningModel.WeeklyPlan" />
         </EntityContainer>
         <EntityType Name="Role">
           <Key>
@@ -199,6 +209,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="WeeklyPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeekOf" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="WeekPlan" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -243,6 +261,15 @@
                 <ScalarProperty Name="UserLevel" ColumnName="UserLevel" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeeklyPlans">
+            <EntityTypeMapping TypeName="RunningModel.WeeklyPlan">
+              <MappingFragment StoreEntitySet="WeeklyPlan">
+                <ScalarProperty Name="WeekPlan" ColumnName="WeekPlan" />
+                <ScalarProperty Name="WeekOf" ColumnName="WeekOf" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

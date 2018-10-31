@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Weekly Plans";
+}
+
+<h2>Weekly Plans</h2>
+
+<br />
+
+<table class="table table-dark table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Week Of</th>
+            <th><button type="button" class="btn btn-danger" onclick="add()" style="float:right;">Add Weekly Plan</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var plan in ViewBag.WeeklyPlans)
+        {
+            <tr>
+                <td>@plan.WeekOf</td>
+                <td><button type="button" class="btn btn-warning" onclick="edit(@plan.ID)">Edit User</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        function add() {
+            window.location = '/Admin/AddPlan';
+        }
+        function edit(id) {
+            window.location = '/Admin/EditPlan?id=' + id;
+        }
+    </script>
+}

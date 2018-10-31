@@ -12,6 +12,7 @@
         <AssociationConnector Association="RunningModel.FK_Users_Role" />
         <AssociationConnector Association="RunningModel.FK_RunningCalendar_RunTypes" />
         <AssociationConnector Association="RunningModel.FK_RunningCalendar_Users" />
+        <EntityTypeShape EntityType="RunningModel.WeeklyPlan" Width="1.5" PointX="0.75" PointY="3.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

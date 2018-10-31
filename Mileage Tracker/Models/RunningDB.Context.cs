@@ -29,5 +29,6 @@ namespace Mileage_Tracker.Models
         public virtual DbSet<RunningCalendar> RunningCalendars { get; set; }
         public virtual DbSet<RunType> RunTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<WeeklyPlan> WeeklyPlans { get; set; }
     }
 }

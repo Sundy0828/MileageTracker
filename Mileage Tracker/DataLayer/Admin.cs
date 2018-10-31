@@ -52,7 +52,7 @@ namespace Mileage_Tracker.DataLayer
                 return false;
             }
         }
-        public string CreatePassword(int length)
+        private string CreatePassword(int length)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();
@@ -62,6 +62,11 @@ namespace Mileage_Tracker.DataLayer
                 res.Append(valid[rnd.Next(valid.Length)]);
             }
             return res.ToString();
+        }
+
+        public List<WeeklyPlan> GetWeeklyPlans()
+        {
+            return DB.WeeklyPlans.ToList();
         }
     }
 }

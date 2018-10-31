@@ -1,5 +1,7 @@
-﻿using Mileage_Tracker.DataLayer;
+﻿using Mileage_Tracker.Classes;
+using Mileage_Tracker.DataLayer;
 using Mileage_Tracker.Models;
+using Mileage_Tracker.Models.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,30 @@ namespace Mileage_Tracker.Controllers
             return View();
         }
 
+        // GET: Admin
+        public ActionResult WeeklyPlan()
+        {
+            ViewBag.WeeklyPlans = DB.GetWeeklyPlans();
+            return View();
+        }
+        // GET: Admin
+        public ActionResult AddPlan()
+        {
+            var monday = Utils.StartOfWeek(DateTime.Now);
+            ViewBag.Monday = monday.Date;
+            ViewBag.WeeklyPlans = DB.GetWeeklyPlans();
+            return View();
+        }
+        // GET: Admin
+        public ActionResult CreatePlan(DateTime Date, String Plan)
+        {
+            var monday = Utils.StartOfWeek(DateTime.Now);
+            ViewBag.Monday = monday.Date;
+            ViewBag.WeeklyPlans = DB.GetWeeklyPlans();
+            return View();
+        }
+
+        #region Users
         // GET: Admin
         public ActionResult Users()
         {
@@ -57,7 +83,7 @@ namespace Mileage_Tracker.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("AddUser", "Admin");
+            return RedirectToAction("Users", "Admin");
         }
         // GET: Admin
         public ActionResult UpdateUser(String email, String dName, int utype, String active)
@@ -69,8 +95,9 @@ namespace Mileage_Tracker.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("AddUser", "Admin");
+            return RedirectToAction("Users", "Admin");
         }
+        #endregion
 
     }
 }
