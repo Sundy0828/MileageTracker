@@ -1,4 +1,5 @@
-﻿using Mileage_Tracker.Models;
+﻿using Mileage_Tracker.Classes;
+using Mileage_Tracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,15 @@ namespace Mileage_Tracker.DataLayer
 {
     public class Admin : DataBase
     {
-        public Boolean CreateUser(String email, int utype, Boolean active)
+        public Boolean CreateUser(String email, String dName, int utype, Boolean active)
         {
             try
             {
                 var newUser = new User()
                 {
                     UserName = email,
-                    Password = CreatePassword(8),
+                    DisplayName = dName,
+                    Password = Utils.sha256(CreatePassword(8)),
                     UserLevel = utype,
                     ResetNeeded = true,
                     Active = active
@@ -27,6 +29,25 @@ namespace Mileage_Tracker.DataLayer
 
                 return true;
             }catch
+            {
+                return false;
+            }
+        }
+        public Boolean UpdateUser(String email, String dName, int utype, Boolean active)
+        {
+            try
+            {
+                var newUser = getUser(email);
+                newUser.UserName = email;
+                newUser.DisplayName = dName;
+                newUser.UserLevel = utype;
+                newUser.Active = active;
+
+                this.DB.SaveChanges();
+
+                return true;
+            }
+            catch
             {
                 return false;
             }

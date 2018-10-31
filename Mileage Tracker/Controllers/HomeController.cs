@@ -1,4 +1,5 @@
-﻿using Mileage_Tracker.DataLayer;
+﻿using Mileage_Tracker.Classes;
+using Mileage_Tracker.DataLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Mileage_Tracker.Controllers
                 var user = DB.getUser(userName);
                 if (user != null)
                 {
-                    if (user.Password == password)
+                    if (user.Password == Utils.sha256(password))
                     {
                         return RedirectToAction("Index", "Home");
                     }

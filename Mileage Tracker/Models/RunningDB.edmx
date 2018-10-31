@@ -41,6 +41,7 @@
           <Property Name="UserLevel" Type="int" Nullable="false" />
           <Property Name="ResetNeeded" Type="bit" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_RunningCalendar_RunTypes">
           <End Role="RunTypes" Type="Self.RunTypes" Multiplicity="1" />
@@ -160,6 +161,7 @@
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="RunningModel.FK_Users_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="RunningCalendars" Relationship="RunningModel.FK_RunningCalendar_Users" FromRole="User" ToRole="RunningCalendar" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Users_Role">
           <End Type="RunningModel.Role" Role="Role" Multiplicity="1" />
@@ -235,6 +237,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="RunningModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ResetNeeded" ColumnName="ResetNeeded" />
                 <ScalarProperty Name="UserLevel" ColumnName="UserLevel" />

@@ -26,6 +26,7 @@ namespace Mileage_Tracker.Models
         public int UserLevel { get; set; }
         public bool ResetNeeded { get; set; }
         public bool Active { get; set; }
+        public string DisplayName { get; set; }
     
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

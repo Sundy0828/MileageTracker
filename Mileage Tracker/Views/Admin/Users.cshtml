@@ -19,7 +19,7 @@
         @foreach (var user in ViewBag.Users)
         {
             <tr>
-                <td>@user.UserName</td>
+                <td>@user.DisplayName</td>
                 <td><button type="button" class="btn btn-warning" onclick="edit(@user.ID)">Edit User</button></td>
             </tr>
         }
@@ -32,7 +32,7 @@
             window.location = '/Admin/AddUser';
         }
         function edit(id) {
-            window.location = '/Admin/AddUser?id='+id;
+            window.location = '/Admin/EditUser?id='+id;
         }
     </script>
 }

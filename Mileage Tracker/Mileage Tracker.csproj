@@ -162,6 +162,7 @@
     <Compile Include="Controllers\AthleteController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DataLayer\Calendar.cs" />
     <Compile Include="DataLayer\Athlete.cs" />
     <Compile Include="DataLayer\Admin.cs" />
     <Compile Include="DataLayer\DataBase.cs" />
@@ -270,6 +271,55 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Themes\ckeditor_full\ckeditor.js" />
+    <Content Include="Themes\ckeditor_full\translations\ar.js" />
+    <Content Include="Themes\ckeditor_full\translations\ast.js" />
+    <Content Include="Themes\ckeditor_full\translations\bg.js" />
+    <Content Include="Themes\ckeditor_full\translations\ca.js" />
+    <Content Include="Themes\ckeditor_full\translations\cs.js" />
+    <Content Include="Themes\ckeditor_full\translations\da.js" />
+    <Content Include="Themes\ckeditor_full\translations\de-ch.js" />
+    <Content Include="Themes\ckeditor_full\translations\de.js" />
+    <Content Include="Themes\ckeditor_full\translations\el.js" />
+    <Content Include="Themes\ckeditor_full\translations\en-au.js" />
+    <Content Include="Themes\ckeditor_full\translations\eo.js" />
+    <Content Include="Themes\ckeditor_full\translations\es.js" />
+    <Content Include="Themes\ckeditor_full\translations\et.js" />
+    <Content Include="Themes\ckeditor_full\translations\eu.js" />
+    <Content Include="Themes\ckeditor_full\translations\fa.js" />
+    <Content Include="Themes\ckeditor_full\translations\fi.js" />
+    <Content Include="Themes\ckeditor_full\translations\fr.js" />
+    <Content Include="Themes\ckeditor_full\translations\gl.js" />
+    <Content Include="Themes\ckeditor_full\translations\gu.js" />
+    <Content Include="Themes\ckeditor_full\translations\he.js" />
+    <Content Include="Themes\ckeditor_full\translations\hr.js" />
+    <Content Include="Themes\ckeditor_full\translations\hu.js" />
+    <Content Include="Themes\ckeditor_full\translations\it.js" />
+    <Content Include="Themes\ckeditor_full\translations\ja.js" />
+    <Content Include="Themes\ckeditor_full\translations\km.js" />
+    <Content Include="Themes\ckeditor_full\translations\kn.js" />
+    <Content Include="Themes\ckeditor_full\translations\ko.js" />
+    <Content Include="Themes\ckeditor_full\translations\ku.js" />
+    <Content Include="Themes\ckeditor_full\translations\nb.js" />
+    <Content Include="Themes\ckeditor_full\translations\ne.js" />
+    <Content Include="Themes\ckeditor_full\translations\nl.js" />
+    <Content Include="Themes\ckeditor_full\translations\no.js" />
+    <Content Include="Themes\ckeditor_full\translations\oc.js" />
+    <Content Include="Themes\ckeditor_full\translations\pl.js" />
+    <Content Include="Themes\ckeditor_full\translations\pt-br.js" />
+    <Content Include="Themes\ckeditor_full\translations\pt.js" />
+    <Content Include="Themes\ckeditor_full\translations\ro.js" />
+    <Content Include="Themes\ckeditor_full\translations\ru.js" />
+    <Content Include="Themes\ckeditor_full\translations\si.js" />
+    <Content Include="Themes\ckeditor_full\translations\sk.js" />
+    <Content Include="Themes\ckeditor_full\translations\sq.js" />
+    <Content Include="Themes\ckeditor_full\translations\sv.js" />
+    <Content Include="Themes\ckeditor_full\translations\tr.js" />
+    <Content Include="Themes\ckeditor_full\translations\tt.js" />
+    <Content Include="Themes\ckeditor_full\translations\ug.js" />
+    <Content Include="Themes\ckeditor_full\translations\uk.js" />
+    <Content Include="Themes\ckeditor_full\translations\zh-cn.js" />
+    <Content Include="Themes\ckeditor_full\translations\zh.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -298,10 +348,14 @@
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Athlete\Index.cshtml" />
     <Content Include="Views\Athlete\Week.cshtml" />
+    <Content Include="Views\Calendar\Index.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Themes\ckeditor_full\ckeditor.js.map" />
+    <Content Include="Themes\ckeditor_full\LICENSE.md" />
+    <Content Include="Themes\ckeditor_full\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Calendar\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

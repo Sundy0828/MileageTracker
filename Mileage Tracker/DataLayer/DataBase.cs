@@ -34,6 +34,10 @@ namespace Mileage_Tracker.DataLayer
         {
             return this.DB.Users.Where(u => u.UserName == userName).FirstOrDefault();
         }
+        public User getUser(int id)
+        {
+            return this.DB.Users.Where(u => u.ID == id).FirstOrDefault();
+        }
 
         public List<RunningWeek> getWeeks(int userId)
         {
@@ -76,6 +80,10 @@ namespace Mileage_Tracker.DataLayer
                 });
             }*/
             return weeks;
+        }
+        public List<RunningCalendar> getAllDays()
+        {
+            return this.DB.RunningCalendars.ToList();
         }
         public RunningCalendar getWeek(int userId, DateTime day)
         {

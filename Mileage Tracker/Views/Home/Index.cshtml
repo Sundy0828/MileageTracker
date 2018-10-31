@@ -3,4 +3,22 @@
     ViewBag.Title = "Home";
 }
 
-<h3>Home Page</h3>
+<h2>Home Page</h2>
+
+<div class="form-group">
+    <h3>CKEditor Test</h3>
+    <div ass="col-md-10">
+        <textarea id="FullDescription" class="form-control" rows="200"></textarea>
+
+        @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } }) @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Themes/ckeditor_full/ckeditor.js"></script>
+
+    <script>
+
+        CKEDITOR.replace("FullDescription");
+    </script>
+}
