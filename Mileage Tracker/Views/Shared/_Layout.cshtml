@@ -46,7 +46,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="@Url.Action("Users", "Admin")">Users</a>
                         <a class="dropdown-item" href="@Url.Action("WeeklyPlan", "Admin")">Weekly Plans</a>
-                        <a class="dropdown-item" href="#">Reports</a>
+                        <a class="dropdown-item" href="@Url.Action("Reports", "Admin", new { date = DateTime.Now })">Reports</a>
                     </div>
                 </li>
             </ul>
@@ -65,5 +65,22 @@
     <!--@Scripts.Render("~/bundles/jquery")-->
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+    </script>
 </body>
 </html>

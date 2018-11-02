@@ -68,5 +68,46 @@ namespace Mileage_Tracker.DataLayer
         {
             return DB.WeeklyPlans.ToList();
         }
+        public WeeklyPlan GetWeeklyPlan(int id)
+        {
+            return DB.WeeklyPlans.Where(w => w.ID == id).FirstOrDefault();
+        }
+        public Boolean CreatePlan(DateTime date, String plan)
+        {
+            try
+            {
+                var newPlan = new WeeklyPlan()
+                {
+                    WeekOf = date,
+                    WeekPlan = plan
+                };
+
+                this.DB.WeeklyPlans.Add(newPlan);
+                this.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public Boolean UpdatePlan(int ID, DateTime date, String plan)
+        {
+            try
+            {
+                var newPlan = GetWeeklyPlan(ID);
+                newPlan.WeekOf = date;
+                newPlan.WeekPlan = plan;
+
+                this.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

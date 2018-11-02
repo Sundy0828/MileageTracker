@@ -5,20 +5,56 @@
 
 <h2>Home Page</h2>
 
-<div class="form-group">
-    <h3>CKEditor Test</h3>
-    <div ass="col-md-10">
-        <textarea id="FullDescription" class="form-control"></textarea>
+<style>
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
 
-        @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } }) @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+</style>
+
+@foreach (var plan in ViewBag.WeeklyPlans)
+{
+    <button class="accordion">Week of @plan.WeekOf.ToString("dddd, dd MMMM")</button>
+    <div class="panel">
+        @plan.WeekPlan
     </div>
-</div>
-
-@section scripts{
-    <script src="~/Themes/ckeditor/ckeditor.js"></script>
-
-    <script>
-
-        CKEDITOR.replace("FullDescription");
-    </script>
 }
+
+
+    @section Scripts {
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.display === "block") {
+                        panel.style.display = "none";
+                    } else {
+                        panel.style.display = "block";
+                    }
+                });
+            }
+        </script>
+    }

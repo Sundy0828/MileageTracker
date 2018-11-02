@@ -27,6 +27,17 @@ namespace Mileage_Tracker.Controllers
         }
 
         // GET: Admin
+        public ActionResult Reports(DateTime date)
+        {
+            var monday = Utils.StartOfWeek(date);
+            ViewBag.monday = monday;
+            ViewBag.Weeks = DB.getWeeksByDate(monday);
+            ViewBag.Users = DB.getActiveUsers();
+            return View();
+        }
+
+        #region Weekly Plans
+        // GET: Admin
         public ActionResult WeeklyPlan()
         {
             ViewBag.WeeklyPlans = DB.GetWeeklyPlans();
@@ -41,13 +52,28 @@ namespace Mileage_Tracker.Controllers
             return View();
         }
         // GET: Admin
-        public ActionResult CreatePlan(DateTime Date, String Plan)
+        public ActionResult EditPlan(int id)
         {
-            var monday = Utils.StartOfWeek(DateTime.Now);
-            ViewBag.Monday = monday.Date;
-            ViewBag.WeeklyPlans = DB.GetWeeklyPlans();
+            var plan = DB.GetWeeklyPlan(id);
+            ViewBag.Monday = plan.WeekOf.Date;
+            ViewBag.plan = HttpUtility.UrlEncode(plan.WeekPlan).Replace("+", " ");
             return View();
         }
+        // GET: Admin
+        public ActionResult CreatePlan(DateTime Date, String Plan)
+        {
+            var plan = HttpUtility.UrlDecode(Plan);
+            DB.CreatePlan(Date, plan);
+            return RedirectToAction("WeeklyPlan", "Admin");
+        }
+        // GET: Admin
+        public ActionResult UpdatePlan(int ID, DateTime Date, String Plan)
+        {
+            var plan = HttpUtility.UrlDecode(Plan);
+            DB.UpdatePlan(ID, Date, plan);
+            return RedirectToAction("WeeklyPlan", "Admin");
+        }
+        #endregion
 
         #region Users
         // GET: Admin
@@ -80,10 +106,10 @@ namespace Mileage_Tracker.Controllers
             if (user == null)
             {
                 DB.CreateUser(email, dName, utype, active == "on");
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Users", "Admin");
             }
 
-            return RedirectToAction("Users", "Admin");
+            return RedirectToAction("Index", "Home");
         }
         // GET: Admin
         public ActionResult UpdateUser(String email, String dName, int utype, String active)

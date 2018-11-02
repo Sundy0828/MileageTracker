@@ -18,8 +18,8 @@
         @foreach (var plan in ViewBag.WeeklyPlans)
         {
             <tr>
-                <td>@plan.WeekOf</td>
-                <td><button type="button" class="btn btn-warning" onclick="edit(@plan.ID)">Edit User</button></td>
+                <td>@plan.WeekOf.ToString("dddd, dd MMMM")</td>
+                <td><button type="button" class="btn btn-warning" onclick="edit(@plan.ID)" style="float:right;">Edit Weekly Plan</button></td>
             </tr>
         }
     </tbody>

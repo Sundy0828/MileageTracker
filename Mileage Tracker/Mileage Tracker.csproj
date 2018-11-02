@@ -636,6 +636,8 @@
     <Content Include="Themes\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Views\Admin\WeeklyPlan.cshtml" />
     <Content Include="Views\Admin\AddPlan.cshtml" />
+    <Content Include="Views\Admin\EditPlan.cshtml" />
+    <Content Include="Views\Admin\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

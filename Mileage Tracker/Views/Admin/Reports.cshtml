@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Reports";
+}
+
+<h2>Reports </h2>
+
+<br />
+
+<div>
+
+
+    <div style="width: 49%; float: left;" class="container">
+        <h3>Week Of Date</h3>
+        <div style="float: right; width: 100%; max-width: 100%; padding: 0;" class="col-sm-6">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker12" data-target-input="nearest">
+                    <input id="dateTimePicker" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker12" onchange="changeDate()" value="@ViewBag.monday.ToString("MM/dd/yyyy")" />
+                    <div class="input-group-append" data-target="#datetimepicker12" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker12').datetimepicker({
+                    format: 'L',
+                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6],
+                    defaultDate: @ViewBag.monday.ToString("MM/dd/yyyy"),
+                    useCurrent: false
+                });
+                $('#datetimepicker12').on('dp.change', function () {
+                    alert("change");
+                });
+            });
+        </script>
+    </div>
+
+    <div style="width: 49%; float: right;">
+        <h3 style="color:white;">d</h3>
+        <div style="float:right;">
+            <button type="submit" class="btn btn-danger" onclick="update()">Run Report</button>
+        </div>
+    </div>
+
+</div>
+
+
+<table class="table table-dark table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Runner</th>
+            <th>Start of Week</th>
+            <th>Total Distance</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var week in ViewBag.Weeks)
+        {
+            <tr>
+                <td>@week.User.DisplayName</td>
+                <td>@week.Date.ToString("dddd, dd MMMM")</td>
+                <td>@week.totMiles</td>
+                <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")")'>View Week</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+<script>
+    function update() {
+        var date = $("#dateTimePicker").val();
+
+        window.location = '/Admin/Reports?date=' + date;
+    }
+</script>
+}

@@ -1,5 +1,6 @@
 ﻿using Mileage_Tracker.Classes;
 using Mileage_Tracker.DataLayer;
+using Mileage_Tracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,17 @@ namespace Mileage_Tracker.Controllers
 
         public ActionResult Index()
         {
+            var plans = DB.GetWeeklyPlans();
+            List<WeeklyPlan> weeklyPlans = new List<WeeklyPlan>();
+            foreach (var plan in plans)
+            {
+                weeklyPlans.Add(new WeeklyPlan {
+                    ID = plan.ID,
+                    WeekOf = plan.WeekOf,
+                    WeekPlan = HttpUtility.UrlEncode(plan.WeekPlan).Replace("+", " ")
+                });
+            }
+            ViewBag.WeeklyPlans = weeklyPlans;
             return View();
         }
         public ActionResult Login()

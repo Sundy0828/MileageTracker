@@ -30,6 +30,10 @@ namespace Mileage_Tracker.DataLayer
         {
             return this.DB.Users.ToList();
         }
+        public List<User> getActiveUsers()
+        {
+            return this.DB.Users.Where(u => u.Active == true).ToList();
+        }
         public User getUser(String userName)
         {
             return this.DB.Users.Where(u => u.UserName == userName).FirstOrDefault();
@@ -37,6 +41,48 @@ namespace Mileage_Tracker.DataLayer
         public User getUser(int id)
         {
             return this.DB.Users.Where(u => u.ID == id).FirstOrDefault();
+        }
+
+        public List<RunningWeek> getWeeksByDate(DateTime date)
+        {
+            var days = this.DB.RunningCalendars.Where(c => c.Monday == date).OrderBy(c => c.User.ID).ThenBy(x => x.Date).ToList();
+            List<RunningWeek> weeks = new List<RunningWeek>();
+            User user = new User();
+            var sum = 0.0;
+            foreach (var week in days)
+            {
+
+                if (user.ID == 0)
+                {
+                    user = week.User;
+                    sum += week.Distance;
+                }
+                else if (user != week.User)
+                {
+                    weeks.Add(new RunningWeek()
+                    {
+                        User = user,
+                        Date = date,
+                        totMiles = sum
+                    });
+                    user = week.User;
+                    sum = week.Distance;
+                }
+                else
+                {
+                    sum += week.Distance;
+                }
+            }
+            if (sum > 0)
+            {
+                weeks.Add(new RunningWeek()
+                {
+                    User = user,
+                    Date = date,
+                    totMiles = sum
+                });
+            }
+            return weeks;
         }
 
         public List<RunningWeek> getWeeks(int userId)
@@ -73,12 +119,6 @@ namespace Mileage_Tracker.DataLayer
                 Date = day,
                 totMiles = sum
             });
-            /*foreach (var week in days)
-            {
-                weeks.Add(new RunningWeek() {
-                    Date = week.ToList();
-                });
-            }*/
             return weeks;
         }
         public List<RunningCalendar> getAllDays()
