@@ -19,6 +19,7 @@ namespace Mileage_Tracker.Controllers
             this.DB = new Admin();
         }
 
+        [VerifyLogin]
         public ActionResult Index()
         {
             var plans = DB.GetWeeklyPlans();
@@ -53,6 +54,7 @@ namespace Mileage_Tracker.Controllers
                 {
                     if (user.Password == Utils.sha256(password))
                     {
+                        Utils.setCookie(user.ID);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -61,6 +63,7 @@ namespace Mileage_Tracker.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        [VerifyLogin]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -68,6 +71,7 @@ namespace Mileage_Tracker.Controllers
             return View();
         }
 
+        [VerifyLogin]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

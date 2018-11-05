@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Mileage_Tracker.Controllers
 {
+    [VerifyLogin]
     public class AdminController : Controller
     {
 

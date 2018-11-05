@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Mileage_Tracker.Controllers
 {
+    [VerifyLogin]
     public class AthleteController : Controller
     {
         private Athlete DB;
@@ -25,6 +26,30 @@ namespace Mileage_Tracker.Controllers
             ViewBag.weeks = weeks;
             return View();
         }
+        // GET: Athlete
+        public ActionResult WhatToRun()
+        {
+            var weeklyPercent = new List<double> { 0.2, 0.3, 0.4,0.5,0.6,0.65,0.7,0.75,0.8,0.87,0.93,1,1,0.85,0.9,0.95,0.9,0.85,0.82,0.78,0.75,0.7,0.65,0.6,0.65,0.6,0.63,0.55 };
+            List<DateTime> weeks = new List<DateTime>();
+            var startDate = new DateTime(2018, 5, 21);
+            for (int i = 0; i < weeklyPercent.Count(); i ++)
+            {
+                weeks.Add(Utils.StartOfWeek(startDate.AddDays(i*7)));
+            }
+            ViewBag.weeks = weeks;
+            ViewBag.records = weeklyPercent.Count();
+            ViewBag.percent = weeklyPercent;
+            var user = DB.getUser(2);
+            ViewBag.User = user;
+            return View();
+        }
+        // GET: Athlete
+        public ActionResult WeeklyMileage(int mileage)
+        {
+            ViewBag.mileage = mileage;
+            return View();
+        }
+
         // GET: Athlete
         public ActionResult Week(DateTime date)
         {

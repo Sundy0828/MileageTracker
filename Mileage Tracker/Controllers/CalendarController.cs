@@ -1,4 +1,5 @@
-﻿using Mileage_Tracker.DataLayer;
+﻿using Mileage_Tracker.Classes;
+using Mileage_Tracker.DataLayer;
 using Mileage_Tracker.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Mileage_Tracker.Controllers
 {
+    [VerifyLogin]
     public class CalendarController : Controller
     {
 

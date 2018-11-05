@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Mileage_Tracker.Classes
 {
@@ -36,6 +37,31 @@ namespace Mileage_Tracker.Classes
             }
 
             return Sb.ToString();
+        }
+        public static void setCookie(int id)
+        {
+            HttpCookie myCookie = new HttpCookie("SHUXC");
+            DateTime now = DateTime.Now;
+
+            // Set the cookie value.
+            myCookie.Value = id.ToString();
+            // Set the cookie expiration date.
+            myCookie.Expires = now.AddYears(50); // For a cookie to effectively never expire
+
+            // Add the cookie.
+            HttpContext.Current.Response.SetCookie(myCookie);
+        }
+    }
+
+    public class VerifyLoginAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            HttpCookie cookie = HttpContext.Current.Request.Cookies["SHUXC"];
+            if (cookie == null)
+            {
+                filterContext.Result = new RedirectResult("/Home/Login");
+            }
         }
     }
 }

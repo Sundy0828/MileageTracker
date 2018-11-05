@@ -35,7 +35,8 @@
 {
     <button class="accordion">Week of @plan.WeekOf.ToString("dddd, dd MMMM")</button>
     <div class="panel">
-        @plan.WeekPlan
+        @{var week = HttpUtility.UrlDecode(plan.WeekPlan);}
+        @week
     </div>
 }
 
