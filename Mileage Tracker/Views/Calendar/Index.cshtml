@@ -5,11 +5,18 @@
 
 <h2>Calendar</h2>
 
+<h3>Select Runner</h3>
+@Html.DropDownList("user", new SelectList(ViewBag.users, "ID", "DisplayName", ViewBag.user), new { @class = "form-control", name = "user" })
+
+<br />
+
 <div id='calendar'></div>
 
 
 @section scripts{
     <script>
+        var userID = document.getElementById("user").value;;
+
         $(function () {
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
@@ -24,12 +31,20 @@
                     month: 'month',
                     week: 'week',
                     day: 'day'
-                }, 
-                events: "/Calendar/GetEvents/",
+                },
+                events: "/Calendar/GetEvents",
                 dayClick: function () {
                     alert('a day has been clicked!');
-                }
+                },
+                eventRender: function (event, element, view) {
+                    return event.userId == userID;
+                },
             });
+        });
+
+        $("#user").change(function () {
+            userID = document.getElementById("user").value;
+            $('#calendar').fullCalendar('rerenderEvents');
         });
     </script>
 }

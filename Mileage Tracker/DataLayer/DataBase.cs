@@ -125,6 +125,10 @@ namespace Mileage_Tracker.DataLayer
         {
             return this.DB.RunningCalendars.ToList();
         }
+        public List<RunningCalendar> getUserDays(int id)
+        {
+            return this.DB.RunningCalendars.Where(r => r.User.ID == id).ToList();
+        }
         public RunningCalendar getWeek(int userId, DateTime day)
         {
             return this.DB.RunningCalendars.Where(w => w.UserID == userId && w.Date == day).FirstOrDefault();

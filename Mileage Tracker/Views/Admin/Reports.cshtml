@@ -46,8 +46,12 @@
 
 </div>
 
+<br />
+<br />
+<br />
+<br />
 
-<table class="table table-dark table-hover table-bordered">
+<table id="dataTable" class="table table-dark table-hover table-bordered">
     <thead>
         <tr>
             <th>Runner</th>
@@ -57,25 +61,35 @@
         </tr>
     </thead>
     <tbody>
+        @{ int count = 0;}
         @foreach (var week in ViewBag.Weeks)
         {
             <tr>
                 <td>@week.User.DisplayName</td>
-                <td>@week.Date.ToString("dddd, dd MMMM")</td>
+                <td data-order="@count">@week.Date.ToString("dddd, dd MMMM")</td>
                 <td>@week.totMiles</td>
                 <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")")'>View Week</button></td>
             </tr>
+            count += 1;
         }
     </tbody>
 </table>
 
 
 @section scripts{
-<script>
-    function update() {
-        var date = $("#dateTimePicker").val();
+    <script>
+        function update() {
+            var date = $("#dateTimePicker").val();
 
-        window.location = '/Admin/Reports?date=' + date;
-    }
-</script>
+            window.location = '/Admin/Reports?date=' + date;
+        }
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "order": [],
+                "columnDefs": [
+                    { "orderable": false, "targets": 3 }
+                ]
+            });
+        });
+    </script>
 }

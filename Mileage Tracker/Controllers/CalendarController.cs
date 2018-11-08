@@ -23,12 +23,17 @@ namespace Mileage_Tracker.Controllers
         // GET: Calendar
         public ActionResult Index()
         {
+            ViewBag.users = DB.getActiveUsers();
+            ViewBag.user = 2;
             return View();
         }
-        public JsonResult GetEvents()
+        public JsonResult GetEvents(int id = 0)
         {
-            
             var events = DB.getAllDays();
+            if (id != 0)
+            {
+                events = DB.getUserDays(id);
+            }
 
             var eventList = from e in events
                             select new
@@ -37,7 +42,8 @@ namespace Mileage_Tracker.Controllers
                                 title = e.Distance + " - " + e.User.DisplayName,
                                 start = e.Date.ToString("s"),
                                 end = e.Date.ToString("s"),
-                                allDay = true
+                                allDay = true,
+                                userId = e.User.ID
                             };
         
             var rows = eventList.ToArray();

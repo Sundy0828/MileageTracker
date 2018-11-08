@@ -7,7 +7,7 @@
 
 <br />
 
-<table class="table table-dark table-hover table-bordered">
+<table id="dataTable" class="table table-dark table-hover table-bordered">
     <thead>
         <tr>
             <th>Week Of</th>
@@ -15,12 +15,14 @@
         </tr>
     </thead>
     <tbody>
+        @{ int count = 0;}
         @foreach (var plan in ViewBag.WeeklyPlans)
         {
             <tr>
-                <td>@plan.WeekOf.ToString("dddd, dd MMMM")</td>
+                <td data-order="@count">@plan.WeekOf.ToString("dddd, dd MMMM")</td>
                 <td><button type="button" class="btn btn-warning" onclick="edit(@plan.ID)" style="float:right;">Edit Weekly Plan</button></td>
             </tr>
+            count += 1;
         }
     </tbody>
 </table>
@@ -34,5 +36,13 @@
         function edit(id) {
             window.location = '/Admin/EditPlan?id=' + id;
         }
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "order": [],
+                "columnDefs": [
+                    { "orderable": false, "targets": 1 }
+                ]
+            });
+        });
     </script>
 }
