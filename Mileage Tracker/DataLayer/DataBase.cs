@@ -134,5 +134,14 @@ namespace Mileage_Tracker.DataLayer
             return this.DB.RunningCalendars.Where(w => w.UserID == userId && w.Date == day).FirstOrDefault();
         }
 
+        public List<WeeklyPercnet> getPercents()
+        {
+            return this.DB.WeeklyPercnets.ToList();
+        }
+        public WeeklyPercnet getPercent(int id)
+        {
+            return this.DB.WeeklyPercnets.Where(p => p.ID == id).FirstOrDefault();
+        }
+
     }
 }

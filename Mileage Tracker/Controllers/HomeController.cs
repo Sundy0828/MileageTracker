@@ -54,13 +54,46 @@ namespace Mileage_Tracker.Controllers
                 {
                     if (user.Password == Utils.sha256(password))
                     {
-                        Utils.setCookie(user.ID);
-                        return RedirectToAction("Index", "Home");
+                        Utils.setCookie(user);
+                        if (user.ResetNeeded)
+                        {
+                            return RedirectToAction("Settings", "Home");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        
                     }
                 }
             }
 
+            return RedirectToAction("Login", "Home", new { successful = false });
+        }
+        // GET: Admin
+        public ActionResult Logout()
+        {
+            Utils.deleteCookie();
+
             return RedirectToAction("Login", "Home");
+        }
+
+        [VerifyLogin]
+        public ActionResult Settings()
+        {
+            return View();
+        }
+        // GET: Admin
+        public ActionResult UpdatePassword(String password, String cpassword)
+        {
+            if (password == cpassword)
+            {
+                if (DB.UpdatePassowrd(password))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return RedirectToAction("Settings", "Home", new { successful = false });
         }
 
         [VerifyLogin]

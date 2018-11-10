@@ -157,6 +157,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Classes\UserData.cs" />
     <Compile Include="Classes\Utils.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AthleteController.cs" />
@@ -172,6 +173,9 @@
     <Compile Include="Models\Classes\WeekPlan.cs" />
     <Compile Include="Models\Classes\RunningWeek.cs" />
     <Compile Include="Models\Classes\RunningDay.cs" />
+    <Compile Include="Models\Meet.cs">
+      <DependentUpon>RunningDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>RunningDB.tt</DependentUpon>
     </Compile>
@@ -197,6 +201,9 @@
       <DependentUpon>RunningDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>RunningDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WeeklyPercnet.cs">
       <DependentUpon>RunningDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WeeklyPlan.cs">
@@ -640,6 +647,10 @@
     <Content Include="Views\Admin\Reports.cshtml" />
     <Content Include="Views\Athlete\WhatToRun.cshtml" />
     <Content Include="Views\Athlete\WeeklyMileage.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Views\Admin\WeeklyPercent.cshtml" />
+    <Content Include="Views\Admin\AddWeeklyPercent.cshtml" />
+    <Content Include="Views\Admin\EditWeeklyPercent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

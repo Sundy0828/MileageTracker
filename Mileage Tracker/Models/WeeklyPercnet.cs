@@ -12,27 +12,20 @@ namespace Mileage_Tracker.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class WeeklyPercnet
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public WeeklyPercnet()
         {
-            this.RunningCalendars = new HashSet<RunningCalendar>();
+            this.Users = new HashSet<User>();
         }
     
         public int ID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public int UserLevel { get; set; }
-        public bool ResetNeeded { get; set; }
-        public bool Active { get; set; }
-        public string DisplayName { get; set; }
-        public Nullable<double> PeekMileage { get; set; }
-        public Nullable<int> Percents { get; set; }
+        public System.DateTime FirstWeek { get; set; }
+        public string Percents { get; set; }
+        public string Name { get; set; }
     
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RunningCalendar> RunningCalendars { get; set; }
-        public virtual WeeklyPercnet WeeklyPercnet { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

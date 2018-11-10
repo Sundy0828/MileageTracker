@@ -24,7 +24,7 @@ namespace Mileage_Tracker.Controllers
         public ActionResult Index()
         {
             ViewBag.users = DB.getActiveUsers();
-            ViewBag.user = 2;
+            ViewBag.user = UserData.User.ID;
             return View();
         }
         public JsonResult GetEvents(int id = 0)

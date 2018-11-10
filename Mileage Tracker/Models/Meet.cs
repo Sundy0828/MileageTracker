@@ -12,18 +12,10 @@ namespace Mileage_Tracker.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RunningCalendar
+    public partial class Meet
     {
         public int ID { get; set; }
-        public int UserID { get; set; }
-        public System.DateTime Date { get; set; }
-        public System.DateTime Monday { get; set; }
-        public double Distance { get; set; }
-        public int RunType { get; set; }
-        public string Notes { get; set; }
-        public string CoachNotes { get; set; }
-    
-        public virtual RunType RunType1 { get; set; }
-        public virtual User User { get; set; }
+        public string MeetName { get; set; }
+        public System.DateTime MeetDate { get; set; }
     }
 }

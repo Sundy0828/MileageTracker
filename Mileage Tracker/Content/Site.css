@@ -127,3 +127,7 @@ div[data-toggle="buttons"] label {
         width: 49%;
         display:inline-block;
     }
+.right {
+    left: unset !important;
+    right: 0 !important;
+}

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Mileage_Tracker.DataLayer;
+using Mileage_Tracker.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -38,18 +41,38 @@ namespace Mileage_Tracker.Classes
 
             return Sb.ToString();
         }
-        public static void setCookie(int id)
+        public static void setCookie(User user)
         {
             HttpCookie myCookie = new HttpCookie("SHUXC");
             DateTime now = DateTime.Now;
 
+            var curUser = new User
+            {
+                ID = user.ID,
+                UserName = user.UserName,
+                Password = user.Password,
+                UserLevel = user.UserLevel,
+                ResetNeeded = user.ResetNeeded,
+                Active = user.Active,
+                DisplayName = user.DisplayName,
+                PeekMileage = user.PeekMileage,
+            };
+
             // Set the cookie value.
-            myCookie.Value = id.ToString();
+            myCookie.Value = JsonConvert.SerializeObject(curUser);
             // Set the cookie expiration date.
             myCookie.Expires = now.AddYears(50); // For a cookie to effectively never expire
 
             // Add the cookie.
             HttpContext.Current.Response.SetCookie(myCookie);
+        }
+        public static void deleteCookie()
+        {
+            HttpCookie currentUserCookie = HttpContext.Current.Request.Cookies["SHUXC"];
+            HttpContext.Current.Response.Cookies.Remove("SHUXC");
+            currentUserCookie.Expires = DateTime.Now.AddDays(-10);
+            currentUserCookie.Value = null;
+            HttpContext.Current.Response.SetCookie(currentUserCookie);
         }
     }
 

@@ -36,6 +36,29 @@ namespace Mileage_Tracker.Controllers
             ViewBag.Users = DB.getActiveUsers();
             return View();
         }
+        // GET: Admin
+        public ActionResult WeeklyPercent()
+        {
+            ViewBag.percents = DB.getPercents();
+            return View();
+        }
+        // GET: Admin
+        public ActionResult AddWeeklyPercent()
+        {
+            var monday = Utils.StartOfWeek(DateTime.Now);
+            ViewBag.monday = monday;
+            return View();
+        }
+        // GET: Admin
+        public ActionResult EditWeeklyPercent(int id)
+        {
+            var percent = DB.getPercent(id);
+            var weeklyPercent = percent.Percents.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            var monday = Utils.StartOfWeek(percent.FirstWeek);
+            ViewBag.monday = monday;
+            ViewBag.percents = weeklyPercent;
+            return View();
+        }
 
         #region Weekly Plans
         // GET: Admin
@@ -101,24 +124,24 @@ namespace Mileage_Tracker.Controllers
             return View();
         }
         // GET: Admin
-        public ActionResult CreateUser(String email, String dName, int utype, String active)
+        public ActionResult CreateUser(String email, String dName, int utype, String active, double pkMile)
         {
             var user = DB.getUser(email);
             if (user == null)
             {
-                DB.CreateUser(email, dName, utype, active == "on");
+                DB.CreateUser(email, dName, utype, active == "on", pkMile);
                 return RedirectToAction("Users", "Admin");
             }
 
             return RedirectToAction("Index", "Home");
         }
         // GET: Admin
-        public ActionResult UpdateUser(String email, String dName, int utype, String active)
+        public ActionResult UpdateUser(String email, String dName, int utype, String active, double pkMile)
         {
             var user = DB.getUser(email);
             if (user != null)
             {
-                DB.UpdateUser(email, dName, utype, active == "on");
+                DB.UpdateUser(email, dName, utype, active == "on", pkMile);
                 return RedirectToAction("Index", "Home");
             }
 

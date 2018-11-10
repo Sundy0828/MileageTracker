@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "EditWeeklyPercent";
+}
+
+<h2>EditWeeklyPercent</h2>
+
+<br />
+
+<div>
+    <h3>First Week</h3>
+    <div style="width: 49%; float: left;" class="container">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker12" data-target-input="nearest">
+                    <input id="dateTimePicker" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker12" onchange="changeDate()" value="@ViewBag.monday.ToString("MM/dd/yyyy")" />
+                    <div class="input-group-append" data-target="#datetimepicker12" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker12').datetimepicker({
+                    format: 'L',
+                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6],
+                    defaultDate: @ViewBag.monday.ToString("MM/dd/yyyy"),
+                    useCurrent: false
+                });
+                $('#datetimepicker12').on('dp.change', function () {
+                    alert("change");
+                });
+            });
+        </script>
+    </div>
+    <div style="width: 49%; float: right;">
+        <button style="float: right;" class="btn btn-warning" id="addRow">Add new row</button>
+    </div>
+</div>
+
+
+<br />
+<br />
+
+<h3>Name</h3>
+<input type="text" class="form-control" id="name" required>
+
+<br />
+
+<table id="dataTable" class="table table-dark table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Week Number</th>
+            <th>Percentage</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Week Number</th>
+            <th>Percentage</th>
+            <th></th>
+        </tr>
+    </tfoot>
+
+</table>
+
+<button class="btn btn-danger">Save</button>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $('#dataTable').DataTable();
+            var counter = 1;
+            var weeklyPercents = @Html.Raw(Json.Encode(@ViewBag.percents));
+
+            $('#addRow').on('click', function () {
+                table.row.add([
+                    counter,
+                    '<input type="number" class="form-control" id="percent" required>',
+                    '<i id="icon-delete" class="fa fa-trash-o fa-2x icon-delete" aria-hidden="true"></i>'
+                ]).draw(false);
+
+                counter++;
+            });
+
+            var i;
+            for (i = 0; i < weeklyPercents.length; i++) {
+                // Automatically add a first row of data
+                table.row.add([
+                    counter,
+                    '<input type="number" class="form-control" id="percent" value="' + weeklyPercents[counter] + '" required>',
+                    '<i id="icon-delete" class="fa fa-trash-o fa-2x icon-delete" aria-hidden="true"></i>'
+                ]).draw(false);
+
+                counter++;
+            }
+
+            $('#dataTable tbody').on('click', 'i.icon-delete', function () {
+                table
+                    .row($(this).parents('tr'))
+                    .remove()
+                    .draw();
+
+                counter--;
+            });
+
+        });
+    </script>
+}

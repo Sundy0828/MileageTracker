@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RunningModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Meets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeetName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MeetDate" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -23,6 +31,7 @@
           <Property Name="Distance" Type="float" Nullable="false" />
           <Property Name="RunType" Type="int" Nullable="false" />
           <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CoachNotes" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="RunTypes">
           <Key>
@@ -42,7 +51,17 @@
           <Property Name="ResetNeeded" Type="bit" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="DisplayName" Type="nvarchar(max)" />
-          <Property Name="PeekMileage" Type="int" />
+          <Property Name="PeekMileage" Type="float" />
+          <Property Name="Percents" Type="int" />
+        </EntityType>
+        <EntityType Name="WeeklyPercnets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstWeek" Type="date" Nullable="false" />
+          <Property Name="Percents" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="WeeklyPlan">
           <Key>
@@ -88,11 +107,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Users_WeeklyPercnets">
+          <End Role="WeeklyPercnets" Type="Self.WeeklyPercnets" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeeklyPercnets">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Percents" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RunningModelStoreContainer">
+          <EntitySet Name="Meets" EntityType="Self.Meets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RunningCalendar" EntityType="Self.RunningCalendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RunTypes" EntityType="Self.RunTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeeklyPercnets" EntityType="Self.WeeklyPercnets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeeklyPlan" EntityType="Self.WeeklyPlan" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RunningCalendar_RunTypes" Association="Self.FK_RunningCalendar_RunTypes">
             <End Role="RunTypes" EntitySet="RunTypes" />
@@ -106,16 +139,23 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_WeeklyPercnets" Association="Self.FK_Users_WeeklyPercnets">
+            <End Role="WeeklyPercnets" EntitySet="WeeklyPercnets" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RunningModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="RunningEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Meets" EntityType="RunningModel.Meet" />
           <EntitySet Name="Roles" EntityType="RunningModel.Role" />
           <EntitySet Name="RunningCalendars" EntityType="RunningModel.RunningCalendar" />
           <EntitySet Name="RunTypes" EntityType="RunningModel.RunType" />
           <EntitySet Name="Users" EntityType="RunningModel.User" />
+          <EntitySet Name="WeeklyPercnets" EntityType="RunningModel.WeeklyPercnet" />
+          <EntitySet Name="WeeklyPlans" EntityType="RunningModel.WeeklyPlan" />
           <AssociationSet Name="FK_Users_Role" Association="RunningModel.FK_Users_Role">
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
@@ -128,8 +168,19 @@
             <End Role="User" EntitySet="Users" />
             <End Role="RunningCalendar" EntitySet="RunningCalendars" />
           </AssociationSet>
-          <EntitySet Name="WeeklyPlans" EntityType="RunningModel.WeeklyPlan" />
+          <AssociationSet Name="FK_Users_WeeklyPercnets" Association="RunningModel.FK_Users_WeeklyPercnets">
+            <End Role="WeeklyPercnet" EntitySet="WeeklyPercnets" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Meet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeetName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MeetDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -149,6 +200,7 @@
           <Property Name="Distance" Type="Double" Nullable="false" />
           <Property Name="RunType" Type="Int32" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CoachNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="RunType1" Relationship="RunningModel.FK_RunningCalendar_RunTypes" FromRole="RunningCalendar" ToRole="RunType" />
           <NavigationProperty Name="User" Relationship="RunningModel.FK_RunningCalendar_Users" FromRole="RunningCalendar" ToRole="User" />
         </EntityType>
@@ -170,10 +222,30 @@
           <Property Name="UserLevel" Type="Int32" Nullable="false" />
           <Property Name="ResetNeeded" Type="Boolean" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PeekMileage" Type="Double" />
+          <Property Name="Percents" Type="Int32" />
           <NavigationProperty Name="Role" Relationship="RunningModel.FK_Users_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="RunningCalendars" Relationship="RunningModel.FK_RunningCalendar_Users" FromRole="User" ToRole="RunningCalendar" />
-          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PeekMileage" Type="Int32" />
+          <NavigationProperty Name="WeeklyPercnet" Relationship="RunningModel.FK_Users_WeeklyPercnets" FromRole="User" ToRole="WeeklyPercnet" />
+        </EntityType>
+        <EntityType Name="WeeklyPercnet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstWeek" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Percents" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="RunningModel.FK_Users_WeeklyPercnets" FromRole="WeeklyPercnet" ToRole="User" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WeeklyPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeekOf" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="WeekPlan" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Users_Role">
           <End Type="RunningModel.Role" Role="Role" Multiplicity="1" />
@@ -211,20 +283,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="WeeklyPlan">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WeekOf" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="WeekPlan" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
+        <Association Name="FK_Users_WeeklyPercnets">
+          <End Type="RunningModel.WeeklyPercnet" Role="WeeklyPercnet" Multiplicity="0..1" />
+          <End Type="RunningModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeeklyPercnet">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Percents" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="RunningModelStoreContainer" CdmEntityContainer="RunningEntities" >
+          <EntitySetMapping Name="Meets">
+            <EntityTypeMapping TypeName="RunningModel.Meet">
+              <MappingFragment StoreEntitySet="Meets">
+                <ScalarProperty Name="MeetDate" ColumnName="MeetDate" />
+                <ScalarProperty Name="MeetName" ColumnName="MeetName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="RunningModel.Role">
               <MappingFragment StoreEntitySet="Role">
@@ -236,6 +321,7 @@
           <EntitySetMapping Name="RunningCalendars">
             <EntityTypeMapping TypeName="RunningModel.RunningCalendar">
               <MappingFragment StoreEntitySet="RunningCalendar">
+                <ScalarProperty Name="CoachNotes" ColumnName="CoachNotes" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="RunType" ColumnName="RunType" />
                 <ScalarProperty Name="Distance" ColumnName="Distance" />
@@ -257,6 +343,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="RunningModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Percents" ColumnName="Percents" />
                 <ScalarProperty Name="PeekMileage" ColumnName="PeekMileage" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
@@ -264,6 +351,16 @@
                 <ScalarProperty Name="UserLevel" ColumnName="UserLevel" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeeklyPercnets">
+            <EntityTypeMapping TypeName="RunningModel.WeeklyPercnet">
+              <MappingFragment StoreEntitySet="WeeklyPercnets">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Percents" ColumnName="Percents" />
+                <ScalarProperty Name="FirstWeek" ColumnName="FirstWeek" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

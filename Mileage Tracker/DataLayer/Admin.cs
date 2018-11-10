@@ -10,7 +10,7 @@ namespace Mileage_Tracker.DataLayer
 {
     public class Admin : DataBase
     {
-        public Boolean CreateUser(String email, String dName, int utype, Boolean active)
+        public Boolean CreateUser(String email, String dName, int utype, Boolean active, double pkMile)
         {
             try
             {
@@ -21,7 +21,8 @@ namespace Mileage_Tracker.DataLayer
                     Password = Utils.sha256(CreatePassword(8)),
                     UserLevel = utype,
                     ResetNeeded = true,
-                    Active = active
+                    Active = active,
+                    PeekMileage = pkMile
                 };
 
                 this.DB.Users.Add(newUser);
@@ -33,7 +34,7 @@ namespace Mileage_Tracker.DataLayer
                 return false;
             }
         }
-        public Boolean UpdateUser(String email, String dName, int utype, Boolean active)
+        public Boolean UpdateUser(String email, String dName, int utype, Boolean active, double pkMile)
         {
             try
             {
@@ -42,6 +43,23 @@ namespace Mileage_Tracker.DataLayer
                 newUser.DisplayName = dName;
                 newUser.UserLevel = utype;
                 newUser.Active = active;
+                newUser.PeekMileage = pkMile;
+
+                this.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public Boolean UpdatePassowrd(String password)
+        {
+            try
+            {
+                var newUser = getUser(UserData.User.ID);
+                newUser.Password = Utils.sha256(password);
 
                 this.DB.SaveChanges();
 

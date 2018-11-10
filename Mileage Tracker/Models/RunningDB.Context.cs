@@ -25,10 +25,12 @@ namespace Mileage_Tracker.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Meet> Meets { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RunningCalendar> RunningCalendars { get; set; }
         public virtual DbSet<RunType> RunTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<WeeklyPercnet> WeeklyPercnets { get; set; }
         public virtual DbSet<WeeklyPlan> WeeklyPlans { get; set; }
     }
 }

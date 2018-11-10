@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "WeeklyPercent";
+}
+
+<h2>Weekly Percent</h2>
+
+<br />
+
+<table id="dataTable" class="table table-dark table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th><button type="button" class="btn btn-danger" onclick="add()">Add Percents</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var percent in ViewBag.percents)
+        {
+            <tr>
+                <td><div id="dateOfWeek">@percent.Name</div></td>
+                <td><button type="button" class="btn btn-warning" onclick="edit(@percent.ID)">Edit Percents</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        function add() {
+            window.location = '/Admin/AddWeeklyPercent';
+        }
+        function edit(id) {
+            window.location = '/Admin/EditWeeklyPercent?id=' + id;
+        }
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "order": [],
+                "columnDefs": [
+                    { "orderable": false, "targets": 1 }
+                ]
+            });
+        });
+    </script>
+}

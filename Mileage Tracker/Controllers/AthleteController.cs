@@ -22,16 +22,19 @@ namespace Mileage_Tracker.Controllers
         // GET: Athlete
         public ActionResult Index()
         {
-            var weeks = DB.getWeeks(2);
+            var weeks = DB.getWeeks(UserData.User.ID);
             ViewBag.weeks = weeks;
             return View();
         }
         // GET: Athlete
         public ActionResult WhatToRun()
         {
-            var weeklyPercent = new List<double> { 0.2, 0.3, 0.4,0.5,0.6,0.65,0.7,0.75,0.8,0.87,0.93,1,1,0.85,0.9,0.95,0.9,0.85,0.82,0.78,0.75,0.7,0.65,0.6,0.65,0.6,0.63,0.55 };
+            var user = DB.getUser(UserData.User.ID);
+
+            var weeklyPercent = user.WeeklyPercnet.Percents.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+
             List<DateTime> weeks = new List<DateTime>();
-            var startDate = new DateTime(2018, 5, 21);
+            var startDate = user.WeeklyPercnet.FirstWeek;
             for (int i = 0; i < weeklyPercent.Count(); i ++)
             {
                 weeks.Add(Utils.StartOfWeek(startDate.AddDays(i*7)));
@@ -39,8 +42,8 @@ namespace Mileage_Tracker.Controllers
             ViewBag.weeks = weeks;
             ViewBag.records = weeklyPercent.Count();
             ViewBag.percent = weeklyPercent;
-            var user = DB.getUser(2);
             ViewBag.User = user;
+
             return View();
         }
         // GET: Athlete
@@ -59,7 +62,7 @@ namespace Mileage_Tracker.Controllers
             for (var i = 0; i < 7; i++)
             {
                 var dayOfWeek = monday.AddDays(i);
-                var week = DB.getWeek(2, dayOfWeek);
+                var week = DB.getWeek(UserData.User.ID, dayOfWeek);
                 if (week != null)
                 {
                     days.Add(week);
@@ -68,7 +71,7 @@ namespace Mileage_Tracker.Controllers
                 {
                     var day = new RunningCalendar()
                     {
-                        UserID = 2,
+                        UserID = UserData.User.ID,
                         Date = dayOfWeek,
                         Distance = 0,
                         RunType = 1,
@@ -93,7 +96,7 @@ namespace Mileage_Tracker.Controllers
                 {
                     var newRun = new RunningCalendar()
                     {
-                        UserID = 2,
+                        UserID = UserData.User.ID,
                         Date = run.Date,
                         Monday = run.Monday,
                         Distance = run.Distance,

@@ -5,14 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="899ad5cc1a894749bacce3f25610430f" Name="Diagram1" >
-        <EntityTypeShape EntityType="RunningModel.Role" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="RunningModel.RunningCalendar" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="RunningModel.RunType" Width="1.5" PointX="7.625" PointY="1.375" />
+        <EntityTypeShape EntityType="RunningModel.Meet" Width="1.5" PointX="5.75" PointY="5.75" />
+        <EntityTypeShape EntityType="RunningModel.Role" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="RunningModel.RunningCalendar" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="RunningModel.RunType" Width="1.5" PointX="3" PointY="5.875" />
         <EntityTypeShape EntityType="RunningModel.User" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="RunningModel.WeeklyPercnet" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="RunningModel.WeeklyPlan" Width="1.5" PointX="7.75" PointY="0.75" />
         <AssociationConnector Association="RunningModel.FK_Users_Role" />
         <AssociationConnector Association="RunningModel.FK_RunningCalendar_RunTypes" />
         <AssociationConnector Association="RunningModel.FK_RunningCalendar_Users" />
-        <EntityTypeShape EntityType="RunningModel.WeeklyPlan" Width="1.5" PointX="0.75" PointY="3.5" />
+        <AssociationConnector Association="RunningModel.FK_Users_WeeklyPercnets" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
