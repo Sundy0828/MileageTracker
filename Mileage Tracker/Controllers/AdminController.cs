@@ -57,7 +57,43 @@ namespace Mileage_Tracker.Controllers
             var monday = Utils.StartOfWeek(percent.FirstWeek);
             ViewBag.monday = monday;
             ViewBag.percents = weeklyPercent;
+            ViewBag.name = percent.Name;
             return View();
+        }
+        public ActionResult AddPercents(String Name, String Date, String Percents)
+        {
+            var success = false;
+            var newPercent = new WeeklyPercnet()
+            {
+                FirstWeek = DateTime.Parse(Date),
+                Percents = Percents,
+                Name = Name
+
+            };
+            success = DB.AddPercents(newPercent);
+            if (!success)
+            {
+                return Json(new { success = false });
+            }
+            return Json(new { success = true });
+        }
+        public ActionResult UpdatePercents(int id, String Name, String Date, String Percents)
+        {
+            var success = false;
+            var newPercent = new WeeklyPercnet()
+            {
+                ID = id,
+                FirstWeek = DateTime.Parse(Date),
+                Percents = Percents,
+                Name = Name
+
+            };
+            success = DB.UpdatePercents(newPercent);
+            if (!success)
+            {
+                return Json(new { success = false });
+            }
+            return Json(new { success = true });
         }
 
         #region Weekly Plans

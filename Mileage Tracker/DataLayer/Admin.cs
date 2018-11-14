@@ -127,5 +127,47 @@ namespace Mileage_Tracker.DataLayer
                 return false;
             }
         }
+        public Boolean AddPercents(WeeklyPercnet weeklyPercnet)
+        {
+            try
+            {
+                var newPercent = new WeeklyPercnet()
+                {
+                    FirstWeek = weeklyPercnet.FirstWeek,
+                    Percents = weeklyPercnet.Percents,
+                    Name = weeklyPercnet.Name
+                };
+
+                this.DB.WeeklyPercnets.Add(newPercent);
+                this.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public Boolean UpdatePercents(WeeklyPercnet weeklyPercnet)
+        {
+            try
+            {
+                var newPercent = getPercent(weeklyPercnet.ID);
+
+
+                newPercent.FirstWeek = weeklyPercnet.FirstWeek;
+                newPercent.Percents = weeklyPercnet.Percents;
+                newPercent.Name = weeklyPercnet.Name;
+                
+                
+                this.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

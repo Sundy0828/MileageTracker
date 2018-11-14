@@ -62,7 +62,7 @@
 
 </table>
 
-<button class="btn btn-danger">Save</button>
+<button class="btn btn-danger" onclick="save()">Save</button>
 
 @section Scripts{
     <script>
@@ -90,5 +90,35 @@
             });
 
         });
+
+        function save() {
+            var name = $('#name').val();
+            var date = $('#dateTimePicker').val();;
+            var percent = document.querySelectorAll("[id^=percent]");
+
+            var values = [];
+            var percents = [];
+
+            for (var i = 0; i < percent.length; i++) {
+                percents.push(percent[i].value);
+            }
+
+            $.ajax({
+                url: "/Admin/AddPercents",
+                data: {
+                    "Name": name,
+                    "Date": date,
+                    "Percents": percents.join()
+                },
+                method: "POST",
+                async: false,
+                success: function () {
+                    location.href = "/Admin/WeeklyPercent";
+                },
+                error: function () {
+                    alert("An error occured");
+                }
+            });
+        }
     </script>
 }

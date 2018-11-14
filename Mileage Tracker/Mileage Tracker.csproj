@@ -170,7 +170,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\WeekPlan.cs" />
+    <Compile Include="Models\Classes\CustomPercents.cs" />
     <Compile Include="Models\Classes\RunningWeek.cs" />
     <Compile Include="Models\Classes\RunningDay.cs" />
     <Compile Include="Models\Meet.cs">

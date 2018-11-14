@@ -44,7 +44,7 @@
 <br />
 
 <h3>Name</h3>
-<input type="text" class="form-control" id="name" required>
+<input type="text" class="form-control" id="name" required value="@ViewBag.name">
 
 <br />
 
@@ -66,7 +66,7 @@
 
 </table>
 
-<button class="btn btn-danger">Save</button>
+<button class="btn btn-danger" onclick="save()">Save</button>
 
 @section Scripts{
     <script>
@@ -90,7 +90,7 @@
                 // Automatically add a first row of data
                 table.row.add([
                     counter,
-                    '<input type="number" class="form-control" id="percent" value="' + weeklyPercents[counter] + '" required>',
+                    '<input type="number" class="form-control" id="percent" value="' + weeklyPercents[i] + '" required>',
                     '<i id="icon-delete" class="fa fa-trash-o fa-2x icon-delete" aria-hidden="true"></i>'
                 ]).draw(false);
 
@@ -107,5 +107,37 @@
             });
 
         });
+
+        function save() {
+            var name = $('#name').val();
+            var date = $('#dateTimePicker').val();;
+            var percent = document.querySelectorAll("[id^=percent]");
+            var id = getUrlParameter("id");
+
+            var values = [];
+            var percents = [];
+
+            for (var i = 0; i < percent.length; i++) {
+                percents.push(percent[i].value);
+            }
+
+            $.ajax({
+                url: "/Admin/UpdatePercents",
+                data: {
+                    "id": id,
+                    "Name": name,
+                    "Date": date,
+                    "Percents": percents.join()
+                },
+                method: "POST",
+                async: false,
+                success: function () {
+                    location.href = "/Admin/WeeklyPercent";
+                },
+                error: function () {
+                    alert("An error occured");
+                }
+            });
+        }
     </script>
 }
