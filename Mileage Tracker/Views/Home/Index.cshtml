@@ -2,9 +2,11 @@
 @{
     ViewBag.Title = "Home";
 }
-
-<h2>Home Page</h2>
-
+<br />
+<div class="row">
+    <h2 class="col">Home Page</h2>
+    <div class="col"><button type="submit" class="btn btn-danger" onclick="" style="float: right;">Older Plans</button></div>
+</div>
 <style>
     .accordion {
         background-color: #eee;
@@ -30,7 +32,7 @@
         overflow: hidden;
     }
 </style>
-
+<!--
 @foreach (var plan in ViewBag.WeeklyPlans)
 {
     <button class="accordion">Week of @plan.WeekOf.ToString("dddd, dd MMMM")</button>
@@ -39,10 +41,18 @@
         @week
     </div>
 }
+    -->
+<hr />
+<div id="weeklyPlan">
+
+</div>
+
+@section Scripts {
+    <script>
+            var weeklyplay = "@ViewBag.WeeklyPlans[0].WeekPlan";
+            document.getElementById("weeklyPlan").innerHTML = unescape(weeklyplay);
 
 
-    @section Scripts {
-        <script>
             var acc = document.getElementsByClassName("accordion");
             var i;
 
@@ -57,5 +67,5 @@
                     }
                 });
             }
-        </script>
-    }
+    </script>
+}

@@ -49,12 +49,23 @@ namespace Mileage_Tracker.DataLayer
             List<RunningWeek> weeks = new List<RunningWeek>();
             User user = new User();
             var sum = 0.0;
+            var runMiles = 0.0;
+            var ctMiles = 0.0;
             foreach (var week in days)
             {
 
                 if (user.ID == 0)
                 {
                     user = week.User;
+                    switch (week.RunType)
+                    {
+                        case 1:
+                            runMiles += week.Distance;
+                            break;
+                        case 2:
+                            ctMiles += week.Distance;
+                            break;
+                    }
                     sum += week.Distance;
                 }
                 else if (user != week.User)
@@ -63,13 +74,35 @@ namespace Mileage_Tracker.DataLayer
                     {
                         User = user,
                         Date = date,
-                        totMiles = sum
+                        totMiles = sum,
+                        runMiles = runMiles,
+                        ctMiles = ctMiles
                     });
                     user = week.User;
                     sum = week.Distance;
+                    runMiles = 0.0;
+                    ctMiles = 0.0;
+                    switch (week.RunType)
+                    {
+                        case 1:
+                            runMiles = week.Distance;
+                            break;
+                        case 2:
+                            ctMiles = week.Distance;
+                            break;
+                    }
                 }
                 else
                 {
+                    switch (week.RunType)
+                    {
+                        case 1:
+                            runMiles += week.Distance;
+                            break;
+                        case 2:
+                            ctMiles += week.Distance;
+                            break;
+                    }
                     sum += week.Distance;
                 }
             }
@@ -79,7 +112,9 @@ namespace Mileage_Tracker.DataLayer
                 {
                     User = user,
                     Date = date,
-                    totMiles = sum
+                    totMiles = sum,
+                    runMiles = runMiles,
+                    ctMiles = ctMiles
                 });
             }
             return weeks;
@@ -91,12 +126,24 @@ namespace Mileage_Tracker.DataLayer
             List<RunningWeek> weeks = new List<RunningWeek>();
             DateTime day = new DateTime();
             var sum = 0.0;
+            var runMiles = 0.0;
+            var ctMiles = 0.0;
             foreach (var week in days)
             {
                 
                 if (day == new DateTime())
                 {
                     day = week.Monday;
+
+                    switch (week.RunType)
+                    {
+                        case 1:
+                            runMiles += week.Distance;
+                            break;
+                        case 2:
+                            ctMiles += week.Distance;
+                            break;
+                    }
                     sum += week.Distance;
                 }
                 else if (day != week.Monday)
@@ -104,20 +151,44 @@ namespace Mileage_Tracker.DataLayer
                     weeks.Add(new RunningWeek()
                     {
                         Date = day,
-                        totMiles = sum
+                        totMiles = sum,
+                        runMiles = runMiles,
+                        ctMiles = ctMiles
                     });
                     day = week.Monday;
                     sum = week.Distance;
+                    runMiles = 0.0;
+                    ctMiles = 0.0;
+                    switch (week.RunType)
+                    {
+                        case 1:
+                            runMiles = week.Distance;
+                            break;
+                        case 2:
+                            ctMiles = week.Distance;
+                            break;
+                    }
                 }
                 else
                 {
+                    switch (week.RunType)
+                    {
+                        case 1:
+                            runMiles += week.Distance;
+                            break;
+                        case 2:
+                            ctMiles += week.Distance;
+                            break;
+                    }
                     sum += week.Distance;
                 }
             }
             weeks.Add(new RunningWeek()
             {
                 Date = day,
-                totMiles = sum
+                totMiles = sum,
+                runMiles = runMiles,
+                ctMiles = ctMiles
             });
             return weeks;
         }

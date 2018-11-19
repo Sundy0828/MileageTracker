@@ -56,7 +56,7 @@
         <tr>
             <th>Runner</th>
             <th>Start of Week</th>
-            <th>Total Distance</th>
+            <th>Total Distance (Run / Cross Train)</th>
             <th></th>
         </tr>
     </thead>
@@ -67,8 +67,8 @@
             <tr>
                 <td>@week.User.DisplayName</td>
                 <td data-order="@count">@week.Date.ToString("dddd, dd MMMM")</td>
-                <td>@week.totMiles</td>
-                <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")")'>View Week</button></td>
+                <td>@week.totMiles (@week.runMiles / @week.ctMiles)</td>
+                <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")", @week.User.ID)'>View Week</button></td>
             </tr>
             count += 1;
         }
@@ -82,6 +82,9 @@
             var date = $("#dateTimePicker").val();
 
             window.location = '/Admin/Reports?date=' + date;
+        }
+        function edit(date, id) {
+            window.location = '/Admin/Week?date=' + date + '&id=' + id;
         }
         $(document).ready(function () {
             $('#dataTable').DataTable({

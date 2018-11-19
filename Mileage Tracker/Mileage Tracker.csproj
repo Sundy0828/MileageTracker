@@ -651,6 +651,7 @@
     <Content Include="Views\Admin\WeeklyPercent.cshtml" />
     <Content Include="Views\Admin\AddWeeklyPercent.cshtml" />
     <Content Include="Views\Admin\EditWeeklyPercent.cshtml" />
+    <Content Include="Views\Admin\Week.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

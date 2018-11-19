@@ -36,6 +36,44 @@ namespace Mileage_Tracker.Controllers
             ViewBag.Users = DB.getActiveUsers();
             return View();
         }
+
+        // GET: Admin
+        public ActionResult Week(DateTime date, int id)
+        {
+            ViewBag.user = DB.getUser(id);
+
+            var monday = Utils.StartOfWeek(date);
+            List<RunningCalendar> days = new List<RunningCalendar>();
+
+            for (var i = 0; i < 7; i++)
+            {
+                var dayOfWeek = monday.AddDays(i);
+                var week = DB.getWeek(id, dayOfWeek);
+                if (week != null)
+                {
+                    days.Add(week);
+                }
+                else
+                {
+                    var day = new RunningCalendar()
+                    {
+                        UserID = id,
+                        Date = dayOfWeek,
+                        Distance = 0,
+                        RunType = 1,
+                        Notes = ""
+                    };
+                    days.Add(day);
+                }
+            }
+
+            ViewBag.Monday = monday.Date;
+            ViewBag.Days = days;
+            ViewBag.runTypes = DB.getRunTypes();
+            return View();
+        }
+
+        #region Weekly Percents
         // GET: Admin
         public ActionResult WeeklyPercent()
         {
@@ -95,6 +133,7 @@ namespace Mileage_Tracker.Controllers
             }
             return Json(new { success = true });
         }
+        #endregion
 
         #region Weekly Plans
         // GET: Admin
@@ -147,6 +186,7 @@ namespace Mileage_Tracker.Controllers
         {
             var roles = DB.getRoles();
             ViewBag.roles = roles;
+            ViewBag.percents = DB.getPercents();
 
             return View();
         }
@@ -156,6 +196,7 @@ namespace Mileage_Tracker.Controllers
             var roles = DB.getRoles();
             ViewBag.roles = roles;
             ViewBag.User = DB.getUser(id);
+            ViewBag.percents = DB.getPercents();
 
             return View();
         }

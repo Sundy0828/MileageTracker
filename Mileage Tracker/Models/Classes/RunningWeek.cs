@@ -10,5 +10,7 @@ namespace Mileage_Tracker.Models.Classes
         public User User { get; set; }
         public DateTime Date { get; set; }
         public Double totMiles { get; set; }
+        public Double runMiles { get; set; }
+        public Double ctMiles { get; set; }
     }
 }

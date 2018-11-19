@@ -9,37 +9,42 @@
 <br />
 @using (Html.BeginForm("CreateUser", "Admin", FormMethod.Post))
 {
-    <div class="container">
-        <div class="form-group">
-            <h3>Email:</h3>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
-        </div>
-
-        <div class="form-group">
-            <h3>Display Name:</h3>
-            <input type="text" class="form-control" id="dName" placeholder="Enter email" name="dName" required>
-        </div>
-
-        <h3>User Type</h3>
-        @Html.DropDownList("utype", new SelectList(ViewBag.roles, "Id", "Description"), new { @class = "form-control", name = "utype" })
-
-        <br />
-
-        <div class="form-group">
-            <h3>Peek Mileage:</h3>
-            <input type="number" class="form-control" id="pkMile" placeholder="Enter peek mileage" name="pkMile" required>
-        </div>
-
-        <h3>Active</h3>
-        <div class="btn-group btn-group-vertical" data-toggle="buttons">
-            <label class="btn active">
-                <input type="checkbox" name='active' checked><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> Active</span>
-            </label>
-        </div>
-
-        <br />
-
-        <button type="submit" class="btn btn-danger">Submit</button>
+<div class="container">
+    <div class="form-group">
+        <h3>Email:</h3>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
     </div>
+
+    <div class="form-group">
+        <h3>Display Name:</h3>
+        <input type="text" class="form-control" id="dName" placeholder="Enter email" name="dName" required>
+    </div>
+
+    <h3>User Type</h3>
+    @Html.DropDownList("utype", new SelectList(ViewBag.roles, "Id", "Description"), new { @class = "form-control", name = "utype" })
+
+    <br />
+
+    <h3>Percent Type</h3>
+    @Html.DropDownList("ptype", new SelectList(ViewBag.percents, "ID", "Name"), new { @class = "form-control", name = "ptype" })
+
+    <br />
+
+    <div class="form-group">
+        <h3>Peek Mileage:</h3>
+        <input type="number" class="form-control" id="pkMile" placeholder="Enter peek mileage" name="pkMile" required>
+    </div>
+
+    <h3>Active</h3>
+    <div class="btn-group btn-group-vertical" data-toggle="buttons">
+        <label class="btn active">
+            <input type="checkbox" name='active' checked><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> Active</span>
+        </label>
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-danger">Submit</button>
+</div>
 }
 

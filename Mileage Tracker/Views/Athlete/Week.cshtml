@@ -48,7 +48,7 @@
             <tr>
                 <td><div id="dateOfWeek">@day.Date.ToString("dddd, dd MMMM")</div></td>
                 <td><input id="distance" class="form-control" type="number" value="@day.Distance"/></td>
-                <td>@Html.DropDownList("rtype", new SelectList(ViewBag.runTypes, "ID", "Description"), new { @class = "form-control", name = "rtype" })</td>
+                <td>@Html.DropDownList("rtype", new SelectList(ViewBag.runTypes, "ID", "Description", day.RunType), new { @class = "form-control", name = "rtype" })</td>
                 <td><input id="notes" class="form-control" type="text" value="@day.Notes"/></td>
             </tr>
         }

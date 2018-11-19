@@ -12,7 +12,7 @@
     <thead>
         <tr>
             <th>Start of Week</th>
-            <th>Total Distance</th>
+            <th>Total Distance (Run / Cross Train)</th>
             <th><button type="button" class="btn btn-danger" onclick='edit("@DateTime.Now.ToString("MM/dd/yyyy")")'>Add Week</button></th>
         </tr>
     </thead>
@@ -22,7 +22,7 @@
         {
         <tr>
             <td data-order="@count">@week.Date.ToString("dddd, dd MMMM")</td>
-            <td>@week.totMiles</td>
+            <td>@week.totMiles (@week.runMiles / @week.ctMiles)</td>
             <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")")'>Edit Week</button></td>
             
         </tr>
