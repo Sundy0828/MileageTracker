@@ -60,6 +60,7 @@ namespace Mileage_Tracker.DataLayer
             {
                 var newUser = getUser(UserData.User.ID);
                 newUser.Password = Utils.sha256(password);
+                newUser.ResetNeeded = false;
 
                 this.DB.SaveChanges();
 
