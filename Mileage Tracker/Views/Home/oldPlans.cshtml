@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "oldPlans";
+}
+
+<h2>Old Plans</h2>
+
+<br />
+
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int count = 0;}
+            @foreach (var plan in ViewBag.WeeklyPlans)
+            {
+                <tr>
+                    <td data-order="@count">@plan.WeekOf.ToString("dddd, dd MMMM") - @plan.WeekOf.AddDays(6).ToString("dddd, dd MMMM")</td>
+                    <td><button type="button" class="btn btn-warning" onclick="oldPlan(@plan.ID)">View Plan</button></td>
+                </tr>
+                count += 1;
+            }
+        </tbody>
+    </table>
+</div>
+
+    @section Scripts {
+        <script>
+            function oldPlan(id) {
+                window.location = '/Home/oldPlan?id=' + id;
+            }
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        { "orderable": false, "targets": 1 }
+                    ]
+                });
+            });
+        </script>
+    }

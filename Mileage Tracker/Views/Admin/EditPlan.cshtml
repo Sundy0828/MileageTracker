@@ -44,10 +44,10 @@
 
     <button type="submit" class="btn btn-danger" onclick="save()">Submit</button>
 </div>
-    @section scripts{
-        <script src="~/Themes/ckeditor/ckeditor.js"></script>
+@section scripts{
+    <script src="~/Themes/ckeditor/ckeditor.js"></script>
 
-        <script>
+    <script>
         CKEDITOR.replace("FullDescription");
 
         plan = unescape("@ViewBag.plan");
@@ -71,5 +71,9 @@
                 }
             });
         }
-        </script>
-    }
+        $(function () {
+            var element = document.getElementById("ActiveCoach");
+            element.classList.add("active");
+        });
+    </script>
+}

@@ -8,45 +8,51 @@
 
 <br />
 
-<table id="dataTable" class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Start of Week</th>
-            <th>Total Distance (Run / Cross Train)</th>
-            <th><button type="button" class="btn btn-danger" onclick='edit("@DateTime.Now.ToString("MM/dd/yyyy")")'>Add Week</button></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ int count = 0;}
-        @foreach (var week in ViewBag.Weeks)
-        {
-        <tr>
-            <td data-order="@count">@week.Date.ToString("dddd, dd MMMM")</td>
-            <td>@week.totMiles (@week.runMiles / @week.ctMiles)</td>
-            <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")")'>Edit Week</button></td>
-            
-        </tr>
-            count += 1;
-        }
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Start of Week</th>
+                <th>Total Distance (Run / Cross Train)</th>
+                <th><button type="button" class="btn btn-danger" onclick='edit("@DateTime.Now.ToString("MM/dd/yyyy")")'>Add Week</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int count = 0;}
+            @foreach (var week in ViewBag.Weeks)
+            {
+                <tr>
+                    <td data-order="@count">@week.Date.ToString("dddd, dd MMMM")</td>
+                    <td>@week.totMiles (@week.runMiles / @week.ctMiles)</td>
+                    <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")")'>Edit Week</button></td>
 
-@section Scripts {
-    <script>
-        function add() {
-            window.location = '/Athlete/Week';
-        }
-        function edit(date) {
-            window.location = '/Athlete/Week?date='+date;
-        }
+                </tr>
+                count += 1;
+            }
+        </tbody>
+    </table>
+</div>
 
-        $(document).ready(function () {
-            $('#dataTable').DataTable({
-                "order": [],
-                "columnDefs": [
-                    { "orderable": false, "targets": 2 }
-                ]
+    @section Scripts {
+        <script>
+            function add() {
+                window.location = '/Athlete/Week';
+            }
+            function edit(date) {
+                window.location = '/Athlete/Week?date=' + date;
+            }
+            $(function () {
+                var element = document.getElementById("ActiveAth");
+                element.classList.add("active");
             });
-        });
-    </script>
-}
+
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        { "orderable": false, "targets": 2 }
+                    ]
+                });
+            });
+        </script>
+    }

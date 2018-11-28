@@ -3,7 +3,7 @@
     ViewBag.Title = "EditWeeklyPercent";
 }
 
-<h2>EditWeeklyPercent</h2>
+<h2>Edit Weekly Percent</h2>
 
 <br />
 
@@ -48,25 +48,27 @@
 
 <br />
 
-<table id="dataTable" class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Week Number</th>
-            <th>Percentage</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Week Number</th>
-            <th>Percentage</th>
-            <th></th>
-        </tr>
-    </tfoot>
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Week Number</th>
+                <th>Percentage</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Week Number</th>
+                <th>Percentage</th>
+                <th></th>
+            </tr>
+        </tfoot>
 
-</table>
+    </table>
+</div>
 
-<button class="btn btn-danger" onclick="save()">Save</button>
+    <button class="btn btn-danger" onclick="save()">Save</button>
 
 @section Scripts{
     <script>
@@ -107,18 +109,27 @@
             });
 
         });
+        $(function () {
+            var element = document.getElementById("ActiveCoach");
+            element.classList.add("active");
+        });
 
         function save() {
+            var table = $('#dataTable').DataTable();
             var name = $('#name').val();
-            var date = $('#dateTimePicker').val();;
-            var percent = document.querySelectorAll("[id^=percent]");
+            var date = $('#dateTimePicker').val();
+            var data = table
+                .rows()
+                .data();
+            var percent = table.rows(0).data();
             var id = getUrlParameter("id");
 
             var values = [];
             var percents = [];
 
-            for (var i = 0; i < percent.length; i++) {
-                percents.push(percent[i].value);
+            for (var i = 0; i < data.length; i++) {
+                var value = data[i][1].split('"');
+                percents.push(parseFloat(value[7]));
             }
 
             $.ajax({

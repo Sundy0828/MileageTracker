@@ -8,39 +8,45 @@
 
 <br />
 
-<table id="dataTable" class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>UserName</th>
-            <th><button type="button" class="btn btn-danger" onclick="add()">Add User</button></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in ViewBag.Users)
-        {
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
             <tr>
-                <td>@user.DisplayName</td>
-                <td><button type="button" class="btn btn-warning" onclick="edit(@user.ID)">Edit User</button></td>
+                <th>UserName</th>
+                <th><button type="button" class="btn btn-danger" onclick="add()">Add User</button></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in ViewBag.Users)
+            {
+                <tr>
+                    <td>@user.DisplayName</td>
+                    <td><button type="button" class="btn btn-warning" onclick="edit(@user.ID)">Edit User</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-@section Scripts {
-    <script>
-        function add() {
-            window.location = '/Admin/AddUser';
-        }
-        function edit(id) {
-            window.location = '/Admin/EditUser?id='+id;
-        }
-        $(document).ready(function () {
-            $('#dataTable').DataTable({
-                "order": [],
-                "columnDefs": [
-                    { "orderable": false, "targets": 1 }
-                ]
+    @section Scripts {
+        <script>
+            function add() {
+                window.location = '/Admin/AddUser';
+            }
+            function edit(id) {
+                window.location = '/Admin/EditUser?id=' + id;
+            }
+            $(function () {
+                var element = document.getElementById("ActiveCoach");
+                element.classList.add("active");
             });
-        });
-    </script>
-}
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        { "orderable": false, "targets": 1 }
+                    ]
+                });
+            });
+        </script>
+    }

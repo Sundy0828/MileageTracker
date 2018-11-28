@@ -1,0 +1,35 @@
+﻿
+@{
+      ViewBag.Title = "oldPlan";
+}
+
+<h2>Old Plan</h2>
+
+<hr />
+
+<div id="weeklyPlan" style="overflow-wrap: break-word;">
+
+</div>
+
+@section Scripts {
+    <script>
+        var weeklyplay = "@ViewBag.WeeklyPlans.WeekPlan";
+        document.getElementById("weeklyPlan").innerHTML = unescape(weeklyplay);
+
+
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
+}

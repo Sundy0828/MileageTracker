@@ -7,20 +7,29 @@
 
 @using (Html.BeginForm("UpdatePassword", "Home", FormMethod.Post))
 {
-<div class="container">
+    <div class="container">
 
-    <h3>Password</h3>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="" autofocus="">
+        <h3>Password</h3>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="" autofocus="">
 
-    <br />
+        <br />
 
-    <h3>Confirm Password</h3>
-    <label for="inputCPassword" class="sr-only">Confirm Password</label>
-    <input name="cpassword" type="password" id="inputCPassword" class="form-control" placeholder="Confrim Password" required="">
+        <h3>Confirm Password</h3>
+        <label for="inputCPassword" class="sr-only">Confirm Password</label>
+        <input name="cpassword" type="password" id="inputCPassword" class="form-control" placeholder="Confrim Password" required="">
 
-    <br />
+        <br />
 
-    <button class="btn btn-lg btn-danger btn-block" type="submit">Submit</button>
-</div>
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Submit</button>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            var element = document.getElementById("ActiveUser");
+            element.classList.add("active");
+        });
+    </script>
 }

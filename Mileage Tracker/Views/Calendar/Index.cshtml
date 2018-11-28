@@ -15,16 +15,16 @@
 
 @section scripts{
     <script>
-        var userID = document.getElementById("user").value;;
+        var userID = document.getElementById("user").value;
 
         $(function () {
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 header:
                 {
-                    left: 'prev,next today',
+                    left: window.mobilecheck() ? 'prev, next' : 'prev, next, today',
                     center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+                    right: window.mobilecheck() ? "month,agendaDay" : 'month,agendaWeek,agendaDay'
                 },
                 buttonText: {
                     today: 'today',
@@ -45,6 +45,11 @@
         $("#user").change(function () {
             userID = document.getElementById("user").value;
             $('#calendar').fullCalendar('rerenderEvents');
+        });
+
+        $(function () {
+            var element = document.getElementById("ActiveCal");
+            element.classList.add("active");
         });
     </script>
 }

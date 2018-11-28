@@ -23,7 +23,7 @@ namespace Mileage_Tracker.Controllers
         public ActionResult Index()
         {
             var weeks = DB.getWeeks(UserData.User.ID);
-            ViewBag.weeks = weeks;
+            ViewBag.weeks = weeks.OrderByDescending(w => w.Date);
             return View();
         }
         // GET: Athlete
@@ -59,6 +59,8 @@ namespace Mileage_Tracker.Controllers
             var monday = Utils.StartOfWeek(date);
             List<RunningCalendar> days = new List<RunningCalendar>();
 
+            var coachesNotes = "";
+
             for (var i = 0; i < 7; i++)
             {
                 var dayOfWeek = monday.AddDays(i);
@@ -66,6 +68,10 @@ namespace Mileage_Tracker.Controllers
                 if (week != null)
                 {
                     days.Add(week);
+                    if (!String.IsNullOrWhiteSpace(week.CoachNotes))
+                    {
+                        coachesNotes = week.CoachNotes;
+                    }
                 }
                 else
                 {
@@ -80,6 +86,8 @@ namespace Mileage_Tracker.Controllers
                     days.Add(day);
                 }
             }
+
+            ViewBag.CoachesNotes = coachesNotes;
 
             ViewBag.Monday = monday.Date;
             ViewBag.Days = days;

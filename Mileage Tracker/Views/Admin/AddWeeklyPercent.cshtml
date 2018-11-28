@@ -7,24 +7,20 @@
 
 <br />
 
-<h3>Name</h3>
-<input type="text" class="form-control" id="name" required>
-
-<br />
-
-<h3>First Week</h3>
-<div class="container">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="input-group date" id="datetimepicker12" data-target-input="nearest">
-                <input id="dateTimePicker" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker12" onchange="changeDate()" value="@ViewBag.monday.ToString("MM/dd/yyyy")" />
-                <div class="input-group-append" data-target="#datetimepicker12" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+<div>
+    <h3>First Week</h3>
+    <div style="width: 49%; float: left;" class="container">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker12" data-target-input="nearest">
+                    <input id="dateTimePicker" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker12" onchange="changeDate()" value="@ViewBag.monday.ToString("MM/dd/yyyy")" />
+                    <div class="input-group-append" data-target="#datetimepicker12" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript">
+        <script type="text/javascript">
             $(function () {
                 $('#datetimepicker12').datetimepicker({
                     format: 'L',
@@ -36,89 +32,103 @@
                     alert("change");
                 });
             });
-    </script>
+        </script>
+    </div>
+    <div style="width: 49%; float: right;">
+        <button style="float: right;" class="btn btn-warning" id="addRow">Add new row</button>
+    </div>
 </div>
 
-<button class="btn btn-warning" id="addRow">Add new row</button>
 
 <br />
 <br />
 
-<table id="dataTable" class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Week Number</th>
-            <th>Percentage</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Week Number</th>
-            <th>Percentage</th>
-            <th></th>
-        </tr>
-    </tfoot>
+<h3>Name</h3>
+<input type="text" class="form-control" id="name" required>
 
-</table>
+<br />
 
-<button class="btn btn-danger" onclick="save()">Save</button>
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Week Number</th>
+                <th>Percentage</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Week Number</th>
+                <th>Percentage</th>
+                <th></th>
+            </tr>
+        </tfoot>
 
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            var table = $('#dataTable').DataTable();
-            var counter = 1;
+    </table>
+</div>
 
-            $('#addRow').on('click', function () {
-                table.row.add([
-                    counter,
-                    '<input type="number" class="form-control" id="percent" required>',
-                    '<i id="icon-delete" class="fa fa-trash-o fa-2x icon-delete" aria-hidden="true"></i>'
-                ]).draw(false);
+    <button class="btn btn-danger" onclick="save()">Save</button>
 
-                counter++;
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                var table = $('#dataTable').DataTable();
+                var counter = 1;
+
+                $('#addRow').on('click', function () {
+                    table.row.add([
+                        counter,
+                        '<input type="number" class="form-control" id="percent" required>',
+                        '<i id="icon-delete" class="fa fa-trash-o fa-2x icon-delete" aria-hidden="true"></i>'
+                    ]).draw(false);
+
+                    counter++;
+                });
+
+                $('#dataTable tbody').on('click', 'i.icon-delete', function () {
+                    table
+                        .row($(this).parents('tr'))
+                        .remove()
+                        .draw();
+
+                    counter--;
+                });
+
+            });
+            $(function () {
+                var element = document.getElementById("ActiveCoach");
+                element.classList.add("active");
             });
 
-            $('#dataTable tbody').on('click', 'i.icon-delete', function () {
-                table
-                    .row($(this).parents('tr'))
-                    .remove()
-                    .draw();
+            function save() {
+                var name = $('#name').val();
+                var date = $('#dateTimePicker').val();;
+                var percent = document.querySelectorAll("[id^=percent]");
 
-                counter--;
-            });
+                var values = [];
+                var percents = [];
 
-        });
-
-        function save() {
-            var name = $('#name').val();
-            var date = $('#dateTimePicker').val();;
-            var percent = document.querySelectorAll("[id^=percent]");
-
-            var values = [];
-            var percents = [];
-
-            for (var i = 0; i < percent.length; i++) {
-                percents.push(percent[i].value);
-            }
-
-            $.ajax({
-                url: "/Admin/AddPercents",
-                data: {
-                    "Name": name,
-                    "Date": date,
-                    "Percents": percents.join()
-                },
-                method: "POST",
-                async: false,
-                success: function () {
-                    location.href = "/Admin/WeeklyPercent";
-                },
-                error: function () {
-                    alert("An error occured");
+                for (var i = 0; i < percent.length; i++) {
+                    percents.push(percent[i].value);
                 }
-            });
-        }
-    </script>
-}
+
+                $.ajax({
+                    url: "/Admin/AddPercents",
+                    data: {
+                        "Name": name,
+                        "Date": date,
+                        "Percents": percents.join()
+                    },
+                    method: "POST",
+                    async: false,
+                    success: function () {
+                        location.href = "/Admin/WeeklyPercent";
+                    },
+                    error: function () {
+                        alert("An error occured");
+                    }
+                });
+            }
+        </script>
+    }

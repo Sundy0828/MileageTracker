@@ -51,48 +51,53 @@
 <br />
 <br />
 
-<table id="dataTable" class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Runner</th>
-            <th>Start of Week</th>
-            <th>Total Distance (Run / Cross Train)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ int count = 0;}
-        @foreach (var week in ViewBag.Weeks)
-        {
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
             <tr>
-                <td>@week.User.DisplayName</td>
-                <td data-order="@count">@week.Date.ToString("dddd, dd MMMM")</td>
-                <td>@week.totMiles (@week.runMiles / @week.ctMiles)</td>
-                <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")", @week.User.ID)'>View Week</button></td>
+                <th>Runner</th>
+                <th>Start of Week</th>
+                <th>Total Distance (Run / Cross Train)</th>
+                <th></th>
             </tr>
-            count += 1;
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{ int count = 0;}
+            @foreach (var week in ViewBag.Weeks)
+            {
+                <tr>
+                    <td>@week.User.DisplayName</td>
+                    <td data-order="@count">@week.Date.ToString("dddd, dd MMMM")</td>
+                    <td>@week.totMiles (@week.runMiles / @week.ctMiles)</td>
+                    <td><button type="button" class="btn btn-warning" onclick='edit("@week.Date.ToString("MM/dd/yyyy")", @week.User.ID)'>View Week</button></td>
+                </tr>
+                count += 1;
+            }
+        </tbody>
+    </table>
+</div>
 
+    @section scripts{
+        <script>
+            function update() {
+                var date = $("#dateTimePicker").val();
 
-@section scripts{
-    <script>
-        function update() {
-            var date = $("#dateTimePicker").val();
-
-            window.location = '/Admin/Reports?date=' + date;
-        }
-        function edit(date, id) {
-            window.location = '/Admin/Week?date=' + date + '&id=' + id;
-        }
-        $(document).ready(function () {
-            $('#dataTable').DataTable({
-                "order": [],
-                "columnDefs": [
-                    { "orderable": false, "targets": 3 }
-                ]
+                window.location = '/Admin/Reports?date=' + date;
+            }
+            function edit(date, id) {
+                window.location = '/Admin/Week?date=' + date + '&id=' + id;
+            }
+            $(function () {
+                var element = document.getElementById("ActiveCoach");
+                element.classList.add("active");
             });
-        });
-    </script>
-}
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        { "orderable": false, "targets": 3 }
+                    ]
+                });
+            });
+        </script>
+    }

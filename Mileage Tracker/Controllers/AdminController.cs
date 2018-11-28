@@ -15,11 +15,13 @@ namespace Mileage_Tracker.Controllers
     public class AdminController : Controller
     {
 
-        private Admin DB;
+        private Admin admin;
+        private Calendar calendar;
 
         public AdminController()
         {
-            this.DB = new Admin();
+            this.admin = new Admin();
+            this.calendar = new Calendar();
         }
         // GET: Admin
         public ActionResult Index()
@@ -32,23 +34,24 @@ namespace Mileage_Tracker.Controllers
         {
             var monday = Utils.StartOfWeek(date);
             ViewBag.monday = monday;
-            ViewBag.Weeks = DB.getWeeksByDate(monday);
-            ViewBag.Users = DB.getActiveUsers();
+            ViewBag.Weeks = admin.getWeeksByDate(monday);
+            ViewBag.Users = admin.getActiveUsers();
             return View();
         }
 
         // GET: Admin
         public ActionResult Week(DateTime date, int id)
         {
-            ViewBag.user = DB.getUser(id);
+            ViewBag.user = admin.getUser(id);
 
             var monday = Utils.StartOfWeek(date);
             List<RunningCalendar> days = new List<RunningCalendar>();
+            var runType = admin.getRunTypes();
 
             for (var i = 0; i < 7; i++)
             {
                 var dayOfWeek = monday.AddDays(i);
-                var week = DB.getWeek(id, dayOfWeek);
+                var week = admin.getWeek(id, dayOfWeek);
                 if (week != null)
                 {
                     days.Add(week);
@@ -61,6 +64,7 @@ namespace Mileage_Tracker.Controllers
                         Date = dayOfWeek,
                         Distance = 0,
                         RunType = 1,
+                        RunType1 = runType[0],
                         Notes = ""
                     };
                     days.Add(day);
@@ -69,15 +73,40 @@ namespace Mileage_Tracker.Controllers
 
             ViewBag.Monday = monday.Date;
             ViewBag.Days = days;
-            ViewBag.runTypes = DB.getRunTypes();
+            ViewBag.runTypes = admin.getRunTypes();
             return View();
+        }
+        // GET: Admin
+        public ActionResult UpdateWeek(DateTime Date, String Notes)
+        {
+            var success = false;
+            var test = calendar.getUserDaysByDate(UserData.User.ID, Date);
+            foreach (var run in test)
+            {
+                if (run.Distance > 0)
+                {
+                    var newRun = new RunningCalendar()
+                    {
+                        UserID = UserData.User.ID,
+                        Date = run.Date,
+                        CoachNotes = Notes
+
+                    };
+                    success = admin.UpdateDay(newRun);
+                    if (!success)
+                    {
+                        return Json(new { success = false });
+                    }
+                }
+            }
+            return Json(new { success = true });
         }
 
         #region Weekly Percents
         // GET: Admin
         public ActionResult WeeklyPercent()
         {
-            ViewBag.percents = DB.getPercents();
+            ViewBag.percents = admin.getPercents();
             return View();
         }
         // GET: Admin
@@ -90,7 +119,7 @@ namespace Mileage_Tracker.Controllers
         // GET: Admin
         public ActionResult EditWeeklyPercent(int id)
         {
-            var percent = DB.getPercent(id);
+            var percent = admin.getPercent(id);
             var weeklyPercent = percent.Percents.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
             var monday = Utils.StartOfWeek(percent.FirstWeek);
             ViewBag.monday = monday;
@@ -108,7 +137,7 @@ namespace Mileage_Tracker.Controllers
                 Name = Name
 
             };
-            success = DB.AddPercents(newPercent);
+            success = admin.AddPercents(newPercent);
             if (!success)
             {
                 return Json(new { success = false });
@@ -126,7 +155,7 @@ namespace Mileage_Tracker.Controllers
                 Name = Name
 
             };
-            success = DB.UpdatePercents(newPercent);
+            success = admin.UpdatePercents(newPercent);
             if (!success)
             {
                 return Json(new { success = false });
@@ -139,7 +168,7 @@ namespace Mileage_Tracker.Controllers
         // GET: Admin
         public ActionResult WeeklyPlan()
         {
-            ViewBag.WeeklyPlans = DB.GetWeeklyPlans();
+            ViewBag.WeeklyPlans = admin.GetWeeklyPlans();
             return View();
         }
         // GET: Admin
@@ -147,13 +176,13 @@ namespace Mileage_Tracker.Controllers
         {
             var monday = Utils.StartOfWeek(DateTime.Now);
             ViewBag.Monday = monday.Date;
-            ViewBag.WeeklyPlans = DB.GetWeeklyPlans();
+            ViewBag.WeeklyPlans = admin.GetWeeklyPlans();
             return View();
         }
         // GET: Admin
         public ActionResult EditPlan(int id)
         {
-            var plan = DB.GetWeeklyPlan(id);
+            var plan = admin.GetWeeklyPlan(id);
             ViewBag.Monday = plan.WeekOf.Date;
             ViewBag.plan = HttpUtility.UrlEncode(plan.WeekPlan).Replace("+", " ");
             return View();
@@ -162,14 +191,14 @@ namespace Mileage_Tracker.Controllers
         public ActionResult CreatePlan(DateTime Date, String Plan)
         {
             var plan = HttpUtility.UrlDecode(Plan);
-            DB.CreatePlan(Date, plan);
+            admin.CreatePlan(Date, plan);
             return RedirectToAction("WeeklyPlan", "Admin");
         }
         // GET: Admin
         public ActionResult UpdatePlan(int ID, DateTime Date, String Plan)
         {
             var plan = HttpUtility.UrlDecode(Plan);
-            DB.UpdatePlan(ID, Date, plan);
+            admin.UpdatePlan(ID, Date, plan);
             return RedirectToAction("WeeklyPlan", "Admin");
         }
         #endregion
@@ -178,35 +207,35 @@ namespace Mileage_Tracker.Controllers
         // GET: Admin
         public ActionResult Users()
         {
-            ViewBag.Users = DB.getUsers();
+            ViewBag.Users = admin.getUsers();
             return View();
         }
         // GET: Admin
         public ActionResult AddUser()
         {
-            var roles = DB.getRoles();
+            var roles = admin.getRoles();
             ViewBag.roles = roles;
-            ViewBag.percents = DB.getPercents();
+            ViewBag.percents = admin.getPercents();
 
             return View();
         }
         // GET: Admin
         public ActionResult EditUser(int id)
         {
-            var roles = DB.getRoles();
+            var roles = admin.getRoles();
             ViewBag.roles = roles;
-            ViewBag.User = DB.getUser(id);
-            ViewBag.percents = DB.getPercents();
+            ViewBag.User = admin.getUser(id);
+            ViewBag.percents = admin.getPercents();
 
             return View();
         }
         // GET: Admin
         public ActionResult CreateUser(String email, String dName, int utype, String active, double pkMile)
         {
-            var user = DB.getUser(email);
+            var user = admin.getUser(email);
             if (user == null)
             {
-                DB.CreateUser(email, dName, utype, active == "on", pkMile);
+                admin.CreateUser(email, dName, utype, active == "on", pkMile);
                 return RedirectToAction("Users", "Admin");
             }
 
@@ -215,10 +244,10 @@ namespace Mileage_Tracker.Controllers
         // GET: Admin
         public ActionResult UpdateUser(String email, String dName, int utype, String active, double pkMile)
         {
-            var user = DB.getUser(email);
+            var user = admin.getUser(email);
             if (user != null)
             {
-                DB.UpdateUser(email, dName, utype, active == "on", pkMile);
+                admin.UpdateUser(email, dName, utype, active == "on", pkMile);
                 return RedirectToAction("Index", "Home");
             }
 

@@ -7,26 +7,27 @@
 
 <br />
 
-<table id="dataTable" class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Week Of</th>
-            <th><button type="button" class="btn btn-danger" onclick="add()" style="float:right;">Add Weekly Plan</button></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ int count = 0;}
-        @foreach (var plan in ViewBag.WeeklyPlans)
-        {
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
             <tr>
-                <td data-order="@count">@plan.WeekOf.ToString("dddd, dd MMMM")</td>
-                <td><button type="button" class="btn btn-warning" onclick="edit(@plan.ID)" style="float:right;">Edit Weekly Plan</button></td>
+                <th>Week Of</th>
+                <th><button type="button" class="btn btn-danger" onclick="add()" style="float:right;">Add Weekly Plan</button></th>
             </tr>
-            count += 1;
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @{ int count = 0;}
+            @foreach (var plan in ViewBag.WeeklyPlans)
+            {
+                <tr>
+                    <td data-order="@count">@plan.WeekOf.ToString("dddd, dd MMMM")</td>
+                    <td><button type="button" class="btn btn-warning" onclick="edit(@plan.ID)" style="float:right;">Edit Weekly Plan</button></td>
+                </tr>
+                count += 1;
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>
@@ -36,6 +37,10 @@
         function edit(id) {
             window.location = '/Admin/EditPlan?id=' + id;
         }
+        $(function () {
+            var element = document.getElementById("ActiveCoach");
+            element.classList.add("active");
+        });
         $(document).ready(function () {
             $('#dataTable').DataTable({
                 "order": [],

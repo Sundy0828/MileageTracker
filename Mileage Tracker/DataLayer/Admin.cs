@@ -170,5 +170,29 @@ namespace Mileage_Tracker.DataLayer
                 return false;
             }
         }
+        public Boolean UpdateDay(RunningCalendar day)
+        {
+            try
+            {
+                var newDay = day;
+                var exists = getWeek(day.UserID, day.Date);
+                if (exists == null)
+                {
+                    this.DB.RunningCalendars.Add(newDay);
+                    this.DB.SaveChanges();
+                }
+                else
+                {
+                    exists.CoachNotes = newDay.CoachNotes;
+                    this.DB.SaveChanges();
+
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

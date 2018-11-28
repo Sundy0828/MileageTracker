@@ -7,24 +7,25 @@
 
 <br />
 
-<table id="dataTable" class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th><button type="button" class="btn btn-danger" onclick="add()">Add Percents</button></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var percent in ViewBag.percents)
-        {
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
             <tr>
-                <td><div id="dateOfWeek">@percent.Name</div></td>
-                <td><button type="button" class="btn btn-warning" onclick="edit(@percent.ID)">Edit Percents</button></td>
+                <th>Name</th>
+                <th><button type="button" class="btn btn-danger" onclick="add()">Add Percents</button></th>
             </tr>
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @foreach (var percent in ViewBag.percents)
+            {
+                <tr>
+                    <td><div id="dateOfWeek">@percent.Name</div></td>
+                    <td><button type="button" class="btn btn-warning" onclick="edit(@percent.ID)">Edit Percents</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>
@@ -34,6 +35,10 @@
         function edit(id) {
             window.location = '/Admin/EditWeeklyPercent?id=' + id;
         }
+        $(function () {
+            var element = document.getElementById("ActiveCoach");
+            element.classList.add("active");
+        });
         $(document).ready(function () {
             $('#dataTable').DataTable({
                 "order": [],

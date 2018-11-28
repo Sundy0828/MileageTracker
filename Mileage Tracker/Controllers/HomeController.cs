@@ -37,6 +37,10 @@ namespace Mileage_Tracker.Controllers
         }
         public ActionResult Login()
         {
+            if (Request.Cookies["SHUXC"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         // GET: Admin
@@ -81,6 +85,39 @@ namespace Mileage_Tracker.Controllers
         [VerifyLogin]
         public ActionResult Settings()
         {
+            return View();
+        }
+        [VerifyLogin]
+        public ActionResult oldPlans()
+        {
+            var plans = DB.GetWeeklyPlans();
+            List<WeeklyPlan> weeklyPlans = new List<WeeklyPlan>();
+            foreach (var plan in plans)
+            {
+                weeklyPlans.Add(new WeeklyPlan
+                {
+                    ID = plan.ID,
+                    WeekOf = plan.WeekOf,
+                    WeekPlan = HttpUtility.UrlEncode(plan.WeekPlan).Replace("+", " ")
+                });
+            }
+            ViewBag.WeeklyPlans = weeklyPlans;
+            return View();
+        }
+        [VerifyLogin]
+        public ActionResult oldPlan(int id)
+        {
+            var plan = DB.GetWeeklyPlan(id);
+            List<WeeklyPlan> weeklyPlans = new List<WeeklyPlan>();
+
+            weeklyPlans.Add(new WeeklyPlan
+            {
+                ID = plan.ID,
+                WeekOf = plan.WeekOf,
+                WeekPlan = HttpUtility.UrlEncode(plan.WeekPlan).Replace("+", " ")
+            });
+            
+            ViewBag.WeeklyPlans = weeklyPlans[0];
             return View();
         }
         // GET: Admin

@@ -5,7 +5,7 @@
 <br />
 <div class="row">
     <h2 class="col">Home Page</h2>
-    <div class="col"><button type="submit" class="btn btn-danger" onclick="" style="float: right;">Older Plans</button></div>
+    <div class="col"><button type="submit" class="btn btn-danger" onclick="oldPlans()" style="float: right;">Older Plans</button></div>
 </div>
 <style>
     .accordion {
@@ -43,29 +43,34 @@
 }
     -->
 <hr />
-<div id="weeklyPlan">
+
+<div id="weeklyPlan" style="overflow-wrap: break-word;">
 
 </div>
 
 @section Scripts {
     <script>
-            var weeklyplay = "@ViewBag.WeeklyPlans[0].WeekPlan";
-            document.getElementById("weeklyPlan").innerHTML = unescape(weeklyplay);
+        var weeklyplay = "@ViewBag.WeeklyPlans[0].WeekPlan";
+        document.getElementById("weeklyPlan").innerHTML = unescape(weeklyplay);
 
 
-            var acc = document.getElementsByClassName("accordion");
-            var i;
+        var acc = document.getElementsByClassName("accordion");
+        var i;
 
-            for (i = 0; i < acc.length; i++) {
-                acc[i].addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    var panel = this.nextElementSibling;
-                    if (panel.style.display === "block") {
-                        panel.style.display = "none";
-                    } else {
-                        panel.style.display = "block";
-                    }
-                });
-            }
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+
+        function oldPlans() {
+            window.location = '/Home/oldPlans';
+        }
     </script>
 }

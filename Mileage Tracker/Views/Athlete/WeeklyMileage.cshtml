@@ -7,45 +7,56 @@
 
 <br />
 
-<table class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Day Of Week</th>
-            <th>Mileage</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Monday</td>
-            <td>@Math.Round((ViewBag.mileage * 0.13))</td>
-        </tr>
-        <tr>
-            <td>Tuesday</td>
-            <td>@Math.Round((ViewBag.mileage * 0.13))</td>
-        </tr>
-        <tr>
-            <td>Wednesday</td>
-            <td>@Math.Round((ViewBag.mileage * 0.14))</td>
-        </tr>
-        <tr>
-            <td>Thursday</td>
-            <td>@Math.Round((ViewBag.mileage * 0.18))</td>
-        </tr>
-        <tr>
-            <td>Friday</td>
-            <td>@Math.Round((ViewBag.mileage * 0.13))</td>
-        </tr>
-        <tr>
-            <td>Saturday</td>
-            <td>@Math.Round((ViewBag.mileage * 0.13))</td>
-        </tr>
-        <tr>
-            <td>Sunday</td>
-            <td>@Math.Round((ViewBag.mileage * 0.2))</td>
-        </tr>
-        <tr>
-            <th>Total</th>
-            <th>@ViewBag.mileage</th>
-        </tr>
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-dark table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Day Of Week</th>
+                <th>Mileage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Monday</td>
+                <td>@Math.Round((ViewBag.mileage * 0.13))</td>
+            </tr>
+            <tr>
+                <td>Tuesday</td>
+                <td>@Math.Round((ViewBag.mileage * 0.13))</td>
+            </tr>
+            <tr>
+                <td>Wednesday</td>
+                <td>@Math.Round((ViewBag.mileage * 0.14))</td>
+            </tr>
+            <tr>
+                <td>Thursday</td>
+                <td>@Math.Round((ViewBag.mileage * 0.18))</td>
+            </tr>
+            <tr>
+                <td>Friday</td>
+                <td>@Math.Round((ViewBag.mileage * 0.13))</td>
+            </tr>
+            <tr>
+                <td>Saturday</td>
+                <td>@Math.Round((ViewBag.mileage * 0.13))</td>
+            </tr>
+            <tr>
+                <td>Sunday</td>
+                <td>@Math.Round((ViewBag.mileage * 0.2))</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <th>@ViewBag.mileage</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            var element = document.getElementById("ActiveAth");
+            element.classList.add("active");
+        });
+    </script>
+}

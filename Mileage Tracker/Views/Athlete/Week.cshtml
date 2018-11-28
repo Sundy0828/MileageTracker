@@ -32,33 +32,44 @@
         </script>
     </div>
 </div>
-
-<table class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Distance</th>
-            <th>Type</th>
-            <th>Notes</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var day in ViewBag.Days)
-        {
+<div class="table-responsive">
+    <table class="table table-dark table-hover table-bordered">
+        <thead>
             <tr>
-                <td><div id="dateOfWeek">@day.Date.ToString("dddd, dd MMMM")</div></td>
-                <td><input id="distance" class="form-control" type="number" value="@day.Distance"/></td>
-                <td>@Html.DropDownList("rtype", new SelectList(ViewBag.runTypes, "ID", "Description", day.RunType), new { @class = "form-control", name = "rtype" })</td>
-                <td><input id="notes" class="form-control" type="text" value="@day.Notes"/></td>
+                <th>Date</th>
+                <th>Distance</th>
+                <th>Type</th>
+                <th>Notes</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var day in ViewBag.Days)
+            {
+                <tr>
+                    <td><div id="dateOfWeek">@day.Date.ToString("dddd, dd MMMM")</div></td>
+                    <td><input id="distance" class="form-control" type="number" value="@day.Distance" /></td>
+                    <td>@Html.DropDownList("rtype", new SelectList(ViewBag.runTypes, "ID", "Description", day.RunType), new { @class = "form-control", name = "rtype" })</td>
+                    <td><input id="notes" class="form-control" type="text" value="@day.Notes" /></td>
+                </tr>
+            }
         </tbody>
-</table>
+    </table>
+</div>
+
+<h3>Coaches Notes</h3>
+<textarea id="CoachNotes" class="form-control" readonly>@ViewBag.CoachesNotes</textarea>
+
+<br />
 
 <button type="button" class="btn btn-danger" onclick="save()">Save</button>
 
 @section scripts{
     <script>
+        $(function () {
+            var element = document.getElementById("ActiveAth");
+            element.classList.add("active");
+        });
+
         function changeDate() {
             var date = $('#dateTimePicker').val();
             window.location = '/Athlete/Week?date=' + date;
@@ -86,12 +97,11 @@
                     "RunType": type[i].value,
                     "Notes": note[i].value
                 });
-                //alert(date[i].textContent + ", " + dist[i].value + ", " + time[i].value + ", " + type[i].value + ", " + note[i].value);
             }
 
             $.ajax({
                 url: "/Athlete/UpdateWeek",
-                data: { weeklyRuns : values },
+                data: { weeklyRuns: values },
                 method: "POST",
                 async: false,
                 success: function () {
@@ -103,4 +113,4 @@
             });
         }
     </script>
-    }
+}
