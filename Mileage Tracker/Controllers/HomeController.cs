@@ -54,9 +54,10 @@ namespace Mileage_Tracker.Controllers
                     userName = email + "@setonhill.edu";
                 }
                 var user = DB.getUser(userName);
+                var hash = Utils.sha256(password).ToLower();
                 if (user != null)
                 {
-                    if (user.Password == Utils.sha256(password))
+                    if (user.Password.ToLower() == hash)
                     {
                         Utils.setCookie(user);
                         if (user.ResetNeeded)
