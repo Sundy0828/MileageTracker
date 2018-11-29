@@ -44,7 +44,7 @@ namespace Mileage_Tracker.Controllers
             return View();
         }
         // GET: Admin
-        public ActionResult UserLogin(String email, String password, String rememberMe)
+        public ActionResult UserLogin(String email, String password)
         {
             if (!String.IsNullOrWhiteSpace(email))
             {
@@ -122,13 +122,18 @@ namespace Mileage_Tracker.Controllers
             return View();
         }
         // GET: Admin
-        public ActionResult UpdatePassword(String password, String cpassword)
+        public ActionResult UpdatePassword(String currentPass, String password, String cpassword)
         {
             if (password == cpassword)
             {
-                if (DB.UpdatePassowrd(password))
+                var user = DB.getUser(UserData.User.ID);
+                var hash = Utils.sha256(currentPass);
+                if (user.Password == hash)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (DB.UpdatePassowrd(password))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             return RedirectToAction("Settings", "Home", new { successful = false });

@@ -131,3 +131,18 @@ div[data-toggle="buttons"] label {
     left: unset !important;
     right: 0 !important;
 }
+.page-item.active .page-link {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.page-link {
+    color: #dc3545;
+}
+.page-link:hover {
+    color: #dc3545;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    background-color: #dc3545;
+}

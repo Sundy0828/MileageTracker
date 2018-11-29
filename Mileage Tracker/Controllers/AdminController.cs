@@ -230,24 +230,24 @@ namespace Mileage_Tracker.Controllers
             return View();
         }
         // GET: Admin
-        public ActionResult CreateUser(String email, String dName, int utype, String active, double pkMile)
+        public ActionResult CreateUser(String email, String dName, int utype, int ptype, String active, double pkMile)
         {
             var user = admin.getUser(email);
             if (user == null)
             {
-                admin.CreateUser(email, dName, utype, active == "on", pkMile);
+                admin.CreateUser(email, dName, utype, ptype, active == "on", pkMile);
                 return RedirectToAction("Users", "Admin");
             }
 
             return RedirectToAction("Index", "Home");
         }
         // GET: Admin
-        public ActionResult UpdateUser(String email, String dName, int utype, String active, double pkMile)
+        public ActionResult UpdateUser(String email, String dName, int utype, int ptype, String active, double pkMile)
         {
             var user = admin.getUser(email);
             if (user != null)
             {
-                admin.UpdateUser(email, dName, utype, active == "on", pkMile);
+                admin.UpdateUser(email, dName, utype, ptype, active == "on", pkMile);
                 return RedirectToAction("Index", "Home");
             }
 

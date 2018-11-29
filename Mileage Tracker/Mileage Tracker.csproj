@@ -157,6 +157,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Classes\Email.cs" />
     <Compile Include="Classes\UserData.cs" />
     <Compile Include="Classes\Utils.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -171,6 +172,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CustomPercents.cs" />
+    <Compile Include="Models\Classes\gmail.cs" />
     <Compile Include="Models\Classes\RunningWeek.cs" />
     <Compile Include="Models\Classes\RunningDay.cs" />
     <Compile Include="Models\Meet.cs">

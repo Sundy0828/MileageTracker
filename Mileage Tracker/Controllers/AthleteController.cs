@@ -31,7 +31,12 @@ namespace Mileage_Tracker.Controllers
         {
             var user = DB.getUser(UserData.User.ID);
 
-            var weeklyPercent = user.WeeklyPercnet.Percents.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            var weeklyPercents = user.WeeklyPercnet.Percents;
+            var weeklyPercent = new double[0];
+            if (!String.IsNullOrEmpty(weeklyPercents))
+            {
+                weeklyPercent = weeklyPercents.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            }
 
             List<DateTime> weeks = new List<DateTime>();
             var startDate = user.WeeklyPercnet.FirstWeek;
