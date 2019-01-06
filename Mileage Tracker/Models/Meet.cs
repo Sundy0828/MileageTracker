@@ -16,6 +16,7 @@ namespace Mileage_Tracker.Models
     {
         public int ID { get; set; }
         public string MeetName { get; set; }
-        public System.DateTime MeetDate { get; set; }
+        public System.DateTime MeetDateStart { get; set; }
+        public System.DateTime MeetDateEnd { get; set; }
     }
 }

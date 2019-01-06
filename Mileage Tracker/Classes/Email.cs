@@ -24,7 +24,7 @@ namespace Mileage_Tracker.Classes
                 smtp.Port = 587;
                 smtp.EnableSsl = true;
 
-                NetworkCredential nc = new NetworkCredential("jerrod.sunderland@gmail.com", "passowrd");
+                NetworkCredential nc = new NetworkCredential("jerrod.sunderland2@gmail.com", "ChangeMe$");
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = nc;
                 smtp.Send(mailMessage);

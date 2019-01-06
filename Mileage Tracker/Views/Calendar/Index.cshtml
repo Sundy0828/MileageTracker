@@ -3,6 +3,7 @@
     ViewBag.Title = "Calendar";
 }
 
+
 <h2>Calendar</h2>
 
 <h3>Select Runner</h3>
@@ -32,12 +33,23 @@
                     week: 'week',
                     day: 'day'
                 },
-                events: "/Calendar/GetEvents",
-                dayClick: function () {
-                    alert('a day has been clicked!');
+                events: "/Calendar/GetEvents?id=" + userID,
+                dayClick: function (date, jsEvent, view) {
+                    
                 },
                 eventRender: function (event, element, view) {
+                    if (event.type == "run") {
+                        element.css('background-color', '#ffc107');
+                        element.css('border-color', '#ffc107');
+                        element.css('color', '#000');
+                    } else if (event.type == "meet") {
+                        element.css('background-color', '#dc3545');
+                        element.css('border-color', '#dc3545');
+                        element.css('color', '#fff');
+                        return true;
+                    }
                     return event.userId == userID;
+                    
                 },
             });
         });

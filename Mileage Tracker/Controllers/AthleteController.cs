@@ -38,16 +38,24 @@ namespace Mileage_Tracker.Controllers
                 weeklyPercent = weeklyPercents.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
             }
 
-            List<DateTime> weeks = new List<DateTime>();
             var startDate = user.WeeklyPercnet.FirstWeek;
-            for (int i = 0; i < weeklyPercent.Count(); i ++)
+            List<weekRunPlan> weekRunPlans = new List<weekRunPlan>();
+            for (int i = 0; i < weeklyPercent.Count(); i++)
             {
-                weeks.Add(Utils.StartOfWeek(startDate.AddDays(i*7)));
+                var week = Utils.StartOfWeek(startDate.AddDays(i * 7));
+                var weekTot = (double) user.PeekMileage * weeklyPercent[i];
+                var meets = DB.GetMeets(week, week.AddDays(6));
+                var whatToRun = new weekRunPlan()
+                {
+                    dateStart = week,
+                    dateEnd = week.AddDays(6),
+                    meets = meets,
+                    totMileage = Math.Round(weekTot),
+                    longRun = Math.Round((weekTot * 0.2))
+                };
+                weekRunPlans.Add(whatToRun);
             }
-            ViewBag.weeks = weeks;
-            ViewBag.records = weeklyPercent.Count();
-            ViewBag.percent = weeklyPercent;
-            ViewBag.User = user;
+            ViewBag.weekRunPlan = weekRunPlans;
 
             return View();
         }

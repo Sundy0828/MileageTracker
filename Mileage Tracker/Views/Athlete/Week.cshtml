@@ -83,7 +83,7 @@
         function save() {
             var date = document.querySelectorAll("[id^=dateOfWeek]");
             var dist = document.querySelectorAll("[id^=distance]");
-            var time = document.querySelectorAll("[id^=time]");
+            var monday = $('#dateTimePicker').val();
             var type = document.querySelectorAll("[id^=rtype]");
             var note = document.querySelectorAll("[id^=notes]");
 
@@ -93,7 +93,7 @@
                 values.push({
                     "Date": date[i].textContent,
                     "Distance": dist[i].value,
-                    "Monday": date[0].textContent,
+                    "Monday": monday,
                     "RunType": type[i].value,
                     "Notes": note[i].value
                 });

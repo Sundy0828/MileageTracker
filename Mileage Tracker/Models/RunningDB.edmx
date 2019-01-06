@@ -11,7 +11,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MeetName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="MeetDate" Type="date" Nullable="false" />
+          <Property Name="MeetDateStart" Type="date" Nullable="false" />
+          <Property Name="MeetDateEnd" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -179,7 +180,8 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MeetName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MeetDateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MeetDateEnd" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -304,7 +306,8 @@
           <EntitySetMapping Name="Meets">
             <EntityTypeMapping TypeName="RunningModel.Meet">
               <MappingFragment StoreEntitySet="Meets">
-                <ScalarProperty Name="MeetDate" ColumnName="MeetDate" />
+                <ScalarProperty Name="MeetDateEnd" ColumnName="MeetDateEnd" />
+                <ScalarProperty Name="MeetDateStart" ColumnName="MeetDateStart" />
                 <ScalarProperty Name="MeetName" ColumnName="MeetName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

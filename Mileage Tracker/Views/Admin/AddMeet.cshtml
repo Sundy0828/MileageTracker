@@ -1,0 +1,77 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Add Meet";
+}
+
+<h2>Add Meet</h2>
+<br />
+@using (Html.BeginForm("CreateMeet", "Admin", FormMethod.Post))
+{
+<div class="container">
+    <h3>Meet Name:</h3>
+    <div class="col-md-5">
+        <div class="form-group">
+            <input type="text" class="form-control" id="email" placeholder="Enter meet name" name="meetName" required>
+        </div>
+    </div>
+
+    <h3>Meet Start Day:</h3>
+    <div class='col-md-5'>
+        <div class="form-group">
+            <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7" name="start" value="@ViewBag.monday.ToString("MM/dd/yyyy")" required/>
+                <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Meet End Day:</h3>
+    <div class='col-md-5'>
+        <div class="form-group">
+            <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8" name="end" value="@ViewBag.monday.ToString("MM/dd/yyyy")" required/>
+                <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker7').datetimepicker({
+                format: 'L',
+                defaultDate: @ViewBag.Monday.ToString("MM/dd/yyyy")
+            });
+            $('#datetimepicker8').datetimepicker({
+                format: 'L',
+                defaultDate: @ViewBag.Monday.ToString("MM/dd/yyyy"),
+                useCurrent: false
+            });
+            $("#datetimepicker7").on("change.datetimepicker", function (e) {
+                $('#datetimepicker8').datetimepicker('minDate', e.date);
+            });
+            $("#datetimepicker8").on("change.datetimepicker", function (e) {
+                $('#datetimepicker7').datetimepicker('maxDate', e.date);
+            });
+        });
+    </script>
+
+    <br />
+
+    <button type="submit" class="btn btn-danger">Submit</button>
+</div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            var element = document.getElementById("ActiveCoach");
+            element.classList.add("active");
+        });
+    </script>    
+}

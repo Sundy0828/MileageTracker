@@ -175,6 +175,7 @@
     <Compile Include="Models\Classes\gmail.cs" />
     <Compile Include="Models\Classes\RunningWeek.cs" />
     <Compile Include="Models\Classes\RunningDay.cs" />
+    <Compile Include="Models\Classes\weekRunPlan.cs" />
     <Compile Include="Models\Meet.cs">
       <DependentUpon>RunningDB.tt</DependentUpon>
     </Compile>
@@ -660,6 +661,10 @@
     <Content Include="Views\Admin\Week.cshtml" />
     <Content Include="Views\Home\oldPlans.cshtml" />
     <Content Include="Views\Home\oldPlan.cshtml" />
+    <Content Include="Views\Home\ForgotPassword.cshtml" />
+    <Content Include="Views\Admin\Meets.cshtml" />
+    <Content Include="Views\Admin\AddMeet.cshtml" />
+    <Content Include="Views\Admin\EditMeet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

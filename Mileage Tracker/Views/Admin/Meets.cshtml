@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Meets";
+}
+
+<h2>Meets</h2>
+
+
+<br />
+
+<div class="table-responsive">
+    <table id="dataTable" class="table table-dark table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Meet Name</th>
+                <th>Start Day</th>
+                <th>End Day</th>
+                <th><button type="button" class="btn btn-danger" onclick="add()">Add Meet</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int count = 0;}
+            @foreach (var meet in ViewBag.Meets)
+            {
+                <tr>
+                    <td>@meet.MeetName</td>
+                    <td data-order="@count">@meet.MeetDateStart.ToString("MM/dd/yyyy")</td>
+                    <td data-order="@count">@meet.MeetDateEnd.ToString("MM/dd/yyyy")</td>
+                    <td><button type="button" class="btn btn-warning" onclick="edit(@meet.ID)">Edit User</button></td>
+                </tr>
+                count += 1;
+            }
+        </tbody>
+    </table>
+</div>
+
+    @section Scripts {
+        <script>
+            function add() {
+                window.location = '/Admin/AddMeet';
+            }
+            function edit(id) {
+                window.location = '/Admin/EditMeet?id=' + id;
+            }
+            $(function () {
+                var element = document.getElementById("ActiveCoach");
+                element.classList.add("active");
+            });
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        { "orderable": false, "targets": 3 }
+                    ]
+                });
+            });
+        </script>
+    }

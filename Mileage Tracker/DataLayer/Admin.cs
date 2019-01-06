@@ -14,11 +14,12 @@ namespace Mileage_Tracker.DataLayer
         {
             try
             {
+                var password = CreatePassword(8);
                 var newUser = new User()
                 {
                     UserName = email,
                     DisplayName = dName,
-                    Password = Utils.sha256(CreatePassword(8)),
+                    Password = Utils.sha256(password),
                     UserLevel = utype,
                     ResetNeeded = true,
                     Active = active,
@@ -28,6 +29,8 @@ namespace Mileage_Tracker.DataLayer
 
                 this.DB.Users.Add(newUser);
                 this.DB.SaveChanges();
+
+                Email.Mail(email, "Password", "Your password is: " + password);
 
                 return true;
             }catch
@@ -189,6 +192,46 @@ namespace Mileage_Tracker.DataLayer
                     this.DB.SaveChanges();
 
                 }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
+        public Boolean CreateMeet(String meetName, DateTime start, DateTime end)
+        {
+            try
+            {
+                var newUser = new Meet()
+                {
+                    MeetName = meetName,
+                    MeetDateStart = start,
+                    MeetDateEnd = end
+                };
+
+                this.DB.Meets.Add(newUser);
+                this.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public Boolean UpdateMeet(int id, String meetName, DateTime start, DateTime end)
+        {
+            try
+            {
+                var newMeet = GetMeet(id);
+                newMeet.MeetName = meetName;
+                newMeet.MeetDateStart = start;
+                newMeet.MeetDateEnd = end;
+
+                this.DB.SaveChanges();
+
                 return true;
             }
             catch

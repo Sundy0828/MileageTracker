@@ -32,7 +32,7 @@ namespace Mileage_Tracker.Controllers
                     WeekPlan = HttpUtility.UrlEncode(plan.WeekPlan).Replace("+", " ")
                 });
             }
-            ViewBag.WeeklyPlans = weeklyPlans;
+            ViewBag.WeeklyPlans = weeklyPlans.Last();
             return View();
         }
         public ActionResult Login()
@@ -80,6 +80,21 @@ namespace Mileage_Tracker.Controllers
         {
             Utils.deleteCookie();
 
+            return RedirectToAction("Login", "Home");
+        }
+        // GET: Admin
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        // GET: Admin
+        public ActionResult newPassword(String email)
+        {
+            var user = DB.getUser(email);
+            if (user != null)
+            {
+                DB.ResetPassword(email);
+            }
             return RedirectToAction("Login", "Home");
         }
 

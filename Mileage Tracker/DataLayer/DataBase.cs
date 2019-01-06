@@ -1,4 +1,5 @@
-﻿using Mileage_Tracker.Models;
+﻿using Mileage_Tracker.Classes;
+using Mileage_Tracker.Models;
 using Mileage_Tracker.Models.Classes;
 using System;
 using System.Collections.Generic;
@@ -183,13 +184,16 @@ namespace Mileage_Tracker.DataLayer
                     sum += week.Distance;
                 }
             }
-            weeks.Add(new RunningWeek()
+            if (sum > 0)
             {
-                Date = day,
-                totMiles = sum,
-                runMiles = runMiles,
-                ctMiles = ctMiles
-            });
+                weeks.Add(new RunningWeek()
+                {
+                    Date = day,
+                    totMiles = sum,
+                    runMiles = runMiles,
+                    ctMiles = ctMiles
+                });
+            }
             return weeks;
         }
         public List<RunningCalendar> getAllDays()
@@ -216,6 +220,51 @@ namespace Mileage_Tracker.DataLayer
         public WeeklyPercnet getPercent(int id)
         {
             return this.DB.WeeklyPercnets.Where(p => p.ID == id).FirstOrDefault();
+        }
+        public List<Meet> GetMeets()
+        {
+            return DB.Meets.ToList();
+        }
+        public List<Meet> GetMeets(DateTime start, DateTime end)
+        {
+            return DB.Meets.Where(m => m.MeetDateStart >= start && m.MeetDateEnd <= end).ToList();
+        }
+        public Meet GetMeet(int id)
+        {
+            return DB.Meets.Where(m => m.ID == id).FirstOrDefault();
+        }
+
+        public Boolean ResetPassword(String email)
+        {
+            try
+            {
+                var password = CreatePassword(8);
+                var newUser = getUser(email);
+                newUser.Password = password;
+                newUser.ResetNeeded = true;
+
+                this.DB.Users.Add(newUser);
+                this.DB.SaveChanges();
+
+                Email.Mail(email, "Password", "Your new password is: " + password);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        private string CreatePassword(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+            return res.ToString();
         }
 
     }

@@ -102,6 +102,44 @@ namespace Mileage_Tracker.Controllers
             return Json(new { success = true });
         }
 
+        #region Meets
+        // GET: Admin
+        public ActionResult Meets()
+        {
+            ViewBag.Meets = admin.GetMeets();
+            return View();
+        }
+        // GET: Admin
+        public ActionResult AddMeet()
+        {
+            var monday = Utils.StartOfWeek(DateTime.Now);
+            ViewBag.monday = monday;
+            return View();
+        }
+        // GET: Admin
+        public ActionResult EditMeet(int id)
+        {
+            ViewBag.Meet = admin.GetMeet(id);
+
+            return View();
+        }
+        // GET: Admin
+        public ActionResult CreateMeet(String meetName, DateTime start, DateTime end)
+        {
+            admin.CreateMeet(meetName, start, end);
+
+            return RedirectToAction("Meets", "Admin");
+        }
+        // GET: Admin
+        public ActionResult UpdateMeet(int id, String meetName, DateTime start, DateTime end)
+        {
+            
+            admin.UpdateMeet(id, meetName, start, end);
+
+            return RedirectToAction("Meets", "Admin");
+        }
+        #endregion
+
         #region Weekly Percents
         // GET: Admin
         public ActionResult WeeklyPercent()
